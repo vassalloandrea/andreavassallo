@@ -1,0 +1,16 @@
+---
+import ContentGridFilterItem from "./ContentGridFilterItem.astro";
+
+interface Props {
+  filterCategory: string;
+  style?: "default" | "secondary" | "tertiary";
+  items: { id: string; label: string, icon?: string }[];
+}
+
+const { filterCategory, style = "default", items } = Astro.props;
+---
+
+<div class="font-sans flex flex-wrap gap-2 gap-y-4">
+  <ContentGridFilterItem id="all" label={`All ${filterCategory}`} filterCategory={filterCategory} isAll={true} style={style} />
+  {items.map((item) => <ContentGridFilterItem id={item.id} label={item.label} filterCategory={filterCategory} icon={item.icon} style={style} />)}
+</div>

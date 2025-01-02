@@ -1,0 +1,183 @@
+---
+import { Icon } from "astro-icon/components";
+
+import { cn } from "src/lib/utils";
+
+import Button from "@components/ui/Button.astro";
+
+import type { ZendoCollectionEntry } from "src/lib/zendo/content";
+
+interface Props {
+  hike: ZendoCollectionEntry<"hikes">;
+  mobile: boolean;
+  class?: string;
+}
+
+const { class: className, hike, mobile } = Astro.props;
+
+function getProviderName(url: string): string {
+  try {
+    const hostname = new URL(url).hostname.replace("www.", "");
+
+    if (hostname.includes("komoot")) return "Komoot";
+    if (hostname.includes("alltrails")) return "AllTrails";
+    if (hostname.includes("strava")) return "Strava";
+    if (hostname.includes("wikiloc")) return "Wikiloc";
+    if (hostname.includes("outdooractive")) return "Outdooractive";
+    if (hostname.includes("fatmap")) return "FATMAP";
+    if (hostname.includes("caltopo")) return "CalTopo";
+    if (hostname.includes("gaiagps")) return "Gaia GPS";
+    if (hostname.includes("mapy.cz")) return "Mapy.cz";
+
+    const name = hostname.split(".")[0];
+
+    if (!name) {
+      return "external provider";
+    }
+
+    return name.charAt(0).toUpperCase() + name.slice(1);
+  } catch {
+    return "Provider";
+  }
+}
+
+async function fetchGpxUrl(hike: ZendoCollectionEntry<"hikes">): Promise<string | null> {
+  const files = import.meta.glob<string>("/src/content/assets/gpxs/*.gpx", {
+    query: "?url",
+    import: "default",
+  });
+
+  const gpxFile = files[`/src/content/assets/gpxs/${hike.id.toLowerCase()}.gpx`];
+
+  if (!gpxFile) {
+    return null;
+  }
+
+  return await gpxFile();
+}
+
+const providerName = hike.data.url ? getProviderName(hike.data.url) : null;
+const gpxUrl = await fetchGpxUrl(hike);
+---
+
+{
+  !mobile && (
+    <aside class={cn("hidden lg:block", className)}>
+      <div class="sticky top-24 space-y-5">
+        <div class="space-y-3">
+          <h4 class="text-xs font-medium text-muted-foreground uppercase tracking-wide">Stats</h4>
+
+          <div class="flex items-center justify-between text-sm">
+            <span class="flex items-center gap-2 text-muted-foreground">
+              <Icon name="lucide:map-pin" class="h-4 w-4 -mt-0.5" />
+              Distance
+            </span>
+            <span class="font-medium text-foreground">{hike.data.distance}km</span>
+          </div>
+
+          <div class="flex items-center justify-between text-sm">
+            <span class="flex items-center gap-2 text-muted-foreground">
+              <Icon name="lucide:trending-up" class="h-4 w-4" />
+              Elevation gain
+            </span>
+            <span class="font-medium text-primary">+{hike.data.gain}m</span>
+          </div>
+
+          <div class="flex items-center justify-between text-sm">
+            <span class="flex items-center gap-2 text-muted-foreground">
+              <Icon name="lucide:trending-down" class="h-4 w-4" />
+              Elevation loss
+            </span>
+            <span class="font-medium text-destructive">-{hike.data.loss}m</span>
+          </div>
+
+          <div class="flex items-center justify-between text-sm">
+            <span class="flex items-center gap-2 text-muted-foreground">
+              <Icon name="lucide:clock" class="h-4 w-4" />
+              Moving time
+            </span>
+            <span class="font-medium text-foreground">{hike.data.movingTime}</span>
+          </div>
+
+          <div class="flex items-center justify-between text-sm">
+            <span class="flex items-center gap-2 text-muted-foreground">
+              <Icon name="lucide:clock" class="h-4 w-4" />
+              Total time
+            </span>
+            <span class="font-medium text-foreground">{hike.data.totalTime}</span>
+          </div>
+
+          <div class="flex items-center justify-between text-sm">
+            <span class="flex items-center gap-2 text-muted-foreground">
+              <Icon name="lucide:mountain" class="h-4 w-4" />
+              Difficulty
+            </span>
+            <span class="font-medium text-accent">{hike.data.difficulty}</span>
+          </div>
+        </div>
+
+        <div class="pt-4 border-t border-border/50 space-y-2">
+          {gpxUrl && (
+            <a href={gpxUrl} download class="block">
+              <Button variant="outline" size="sm" class="w-full rounded-lg justify-start">
+                <Icon name="lucide:download" class="h-4 w-4 mr-2" />
+                Download GPX
+              </Button>
+            </a>
+          )}
+
+          {hike.data.url && providerName && (
+            <a href={hike.data.url} target="_blank" rel="noopener noreferrer">
+              <Button variant="outline" size="sm" class="w-full rounded-lg justify-start">
+                <Icon name="lucide:external-link" class="h-4 w-4 mr-2" />
+                View on {providerName}
+              </Button>
+            </a>
+          )}
+        </div>
+      </div>
+    </aside>
+  )
+}
+
+{
+  mobile && (
+    <div class="lg:hidden grid grid-cols-3 border border-border/50 rounded-xl overflow-hidden mb-8">
+      <div class="flex flex-col items-center py-3 px-2 border-r border-border/50">
+        <Icon name="lucide:map-pin" class="h-4 w-4 text-muted-foreground mb-1" />
+        <span class="text-sm font-medium text-foreground">{hike.data.distance}km</span>
+        <span class="text-xs text-muted-foreground">Distance</span>
+      </div>
+
+      <div class="flex flex-col items-center py-3 px-2 border-r border-border/50">
+        <Icon name="lucide:trending-up" class="h-4 w-4 text-muted-foreground mb-1" />
+        <span class="text-sm font-medium text-primary">+{hike.data.gain}m</span>
+        <span class="text-xs text-muted-foreground">Elevation gain</span>
+      </div>
+
+      <div class="flex flex-col items-center py-3 px-2">
+        <Icon name="lucide:trending-down" class="h-4 w-4 text-muted-foreground mb-1" />
+        <span class="text-sm font-medium text-destructive">-{hike.data.loss}m</span>
+        <span class="text-xs text-muted-foreground">Elevation loss</span>
+      </div>
+
+      <div class="flex flex-col items-center py-3 px-2 border-r border-t border-border/50">
+        <Icon name="lucide:clock" class="h-4 w-4 text-muted-foreground mb-1" />
+        <span class="text-sm font-medium text-foreground">{hike.data.movingTime}</span>
+        <span class="text-xs text-muted-foreground">Moving time</span>
+      </div>
+
+      <div class="flex flex-col items-center py-3 px-2 border-r border-t border-border/50">
+        <Icon name="lucide:clock" class="h-4 w-4 text-muted-foreground mb-1" />
+        <span class="text-sm font-medium text-foreground">{hike.data.totalTime}</span>
+        <span class="text-xs text-muted-foreground">Total time</span>
+      </div>
+
+      <div class="flex flex-col items-center py-3 px-2 border-t border-border/50">
+        <Icon name="lucide:mountain" class="h-4 w-4 text-muted-foreground mb-1" />
+        <span class="text-sm font-medium text-accent">{hike.data.difficulty}</span>
+        <span class="text-xs text-muted-foreground">Difficulty</span>
+      </div>
+    </div>
+  )
+}

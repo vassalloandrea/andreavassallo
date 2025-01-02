@@ -1,0 +1,44 @@
+---
+const GA_ID = import.meta.env.PUBLIC_GA4_ID;
+const isProd = import.meta.env.PROD;
+
+interface Props {
+  measurementId?: string;
+}
+
+const { measurementId = GA_ID } = Astro.props;
+const shouldLoad = isProd && measurementId;
+---
+
+{shouldLoad && (
+  <Fragment>
+    <script
+      is:inline
+      async
+      src={`https://www.googletagmanager.com/gtag/js?id=${measurementId}`}
+    ></script>
+
+    <script is:inline define:vars={{ measurementId }}>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        // eslint-disable-next-line prefer-rest-params
+        dataLayer.push(arguments);
+      }
+      gtag("js", new Date());
+
+      gtag("consent", "default", {
+        ad_storage: "denied",
+        analytics_storage: "denied",
+      });
+
+      gtag("config", measurementId, {
+        send_page_view: false,
+      });
+    </script>
+  </Fragment>
+)}
+
+<script>
+  import { analytics } from "../lib/analytics";
+  analytics.init();
+</script>

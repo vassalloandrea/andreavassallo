@@ -1,0 +1,27 @@
+---
+import Layout from "@layouts/Layout.astro";
+import Prose from "@components/ui/Prose.astro";
+import Toc from "@components/ui/Toc.astro";
+import { getMdxComponents } from "src/lib/rendering";
+import SidebarLayout from "@layouts/SidebarLayout.astro";
+
+import { Content, getHeadings } from "src/content/about.mdx";
+import Hero from "@components/ui/Hero.astro";
+---
+
+<title slot="head">About | Andrea Vassallo</title>
+
+<Layout>
+  <SidebarLayout>
+    <Hero class="mb-5">
+      <span slot="antiheading">About this space</span>
+      <span slot="heading">Solving complex problems,<br /><span class="text-primary">delivering real value.</span></span>
+    </Hero>
+
+    <Toc headings={getHeadings()} title="About" slot="sidebar" />
+
+    <Prose>
+      <Content components={getMdxComponents()} />
+    </Prose>
+  </SidebarLayout>
+</Layout>

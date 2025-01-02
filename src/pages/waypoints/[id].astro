@@ -1,0 +1,46 @@
+---
+import { getEntry } from "astro:content";
+import { Icon } from "astro-icon/components";
+
+import Layout from "@layouts/Layout.astro";
+import ContentDetail from "@components/content/waypoints/WaypointContentDetail.astro";
+import WaypointMeta from "@components/content/waypoints/WaypointMeta.astro";
+
+const { id } = Astro.params;
+
+if (!id) {
+  return new Response(null, { status: 404, statusText: "Not Found" });
+}
+
+const waypoint = await getEntry("waypoints", id);
+
+if (!waypoint) {
+  return new Response(null, { status: 404, statusText: "Not Found" });
+}
+---
+
+<title slot="head">{waypoint.data.title} | Andrea Vassallo</title>
+
+<Layout>
+  <ContentDetail entry={waypoint}>
+    <Fragment slot="meta">
+      <WaypointMeta content={waypoint} meta="status" />
+      <WaypointMeta content={waypoint} meta="readingTime" class="text-xs" />
+      <WaypointMeta content={waypoint} meta="updatedAt" class="text-xs" />
+    </Fragment>
+
+    <Fragment slot="topics">
+      <WaypointMeta content={waypoint} meta="topics" />
+    </Fragment>
+
+    <Fragment slot="navigation">
+      <a
+        href="/waypoints"
+        class="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors mb-8"
+      >
+        <Icon name="lucide:arrow-left" class="w-4 h-4" />
+        Back to waypoints
+      </a>
+    </Fragment>
+  </ContentDetail>
+</Layout>

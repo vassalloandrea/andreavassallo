@@ -1,0 +1,14 @@
+---
+import Icon from "node_modules/astro-icon/components/Icon.astro";
+import Button from "../Button.astro";
+---
+
+<Button
+  variant="ghost"
+  aria-label="Toggle menu"
+  data-navbar-target="mobileToggle"
+  data-action="click->navbar#openMenu"
+  class="text-foreground"
+>
+  <Icon name="lucide:menu" class="w-6 h-6" />
+</Button>

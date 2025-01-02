@@ -1,0 +1,12 @@
+---
+import { Icon } from "astro-icon/components";
+---
+
+<button
+  data-controller="back-to-top"
+  data-action="click->back-to-top#scrollToTop scroll@window->back-to-top#toggleVisibility"
+  class="hidden lg:block fixed bottom-8 left-8 py-3 px-3.5 bg-primary text-primary-foreground rounded-full shadow-lg hover:shadow-xl transition-all duration-300 opacity-0 invisible translate-y-2 z-50 pointer-events-none hover:bg-primary/90 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2"
+  aria-label="Back to top"
+>
+  <Icon name="lucide:arrow-up" class="h-6 w-6" />
+</button>

@@ -1,0 +1,21 @@
+---
+import Toc from "@components/ui/Toc.astro";
+import ContentLinks from "@components/content/ContentLinks.astro";
+import { render } from "astro:content";
+import { getEntryIndexRecord, type ZendoCollectionEntry } from "src/lib/zendo/content";
+
+export interface Props {
+  entry: ZendoCollectionEntry;
+}
+
+const { entry } = Astro.props;
+const { headings } = await render(entry);
+const { outboundLinks, inboundLinks } = getEntryIndexRecord(entry.id);
+---
+
+<div class:list={["space-y-4", "mb-4 border-y border-border py-6 mt-4", "md:mb-0 md:border-none md:py-0 md:mt-0"]}>
+  <slot />
+
+  <Toc headings={headings} title={entry.data.title} />
+  <ContentLinks outboundLinks={outboundLinks} inboundLinks={inboundLinks} />
+</div>

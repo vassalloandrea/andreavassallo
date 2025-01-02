@@ -1,0 +1,18 @@
+---
+import { getCollection } from "astro:content";
+
+export async function getStaticPaths() {
+  const writings = await getCollection("writings", ({ data }) => data.url);
+
+  return writings.map((writing) => ({
+    params: { id: writing.id },
+    props: { writingUrl: writing.data.url },
+  }));
+}
+
+const { writingUrl } = Astro.props;
+return Astro.redirect(writingUrl, 301);
+---
+
+{/* This is only needed to prevent an unused variable error in `astro check` */}
+<p>Redirecting to <a href={writingUrl}>{writingUrl}</a>...</p>

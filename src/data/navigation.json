@@ -1,0 +1,44 @@
+[
+  {
+    "href": "/",
+    "text": "Home",
+    "matchPattern": "^/$",
+    "header": true
+  },
+  {
+    "href": "/about",
+    "text": "About",
+    "matchPattern": "^/about$",
+    "header": true
+  },
+  {
+    "href": "/atlas",
+    "text": "The Atlas",
+    "header": true,
+    "matchPattern": "^/atlas$"
+  },
+  {
+    "href": "/waypoints",
+    "text": "Waypoints",
+    "matchPattern": "^/waypoints",
+    "header": true
+  },
+  {
+    "href": "/books",
+    "text": "Books",
+    "matchPattern": "^/books",
+    "header": true
+  },
+  {
+    "href": "/writings",
+    "text": "Writings",
+    "matchPattern": "^/writings",
+    "header": true
+  },
+  {
+    "href": "/hikes",
+    "text": "Hikes",
+    "matchPattern": "^/hikes",
+    "header": true
+  }
+]

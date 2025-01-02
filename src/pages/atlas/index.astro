@@ -1,0 +1,81 @@
+---
+import Hero from "@components/ui/Hero.astro";
+import Layout from "@layouts/Layout.astro";
+import SearchableContent from "@components/content/grid/SearchableContent.astro";
+import { statusFilter, topicFilter, collectionFilter } from "src/lib/filters";
+import StatCard from "@components/ui/StatCard.astro";
+import { Icon } from "astro-icon/components";
+
+const { waypoints: waypointsObject, books: booksObject, hikes: hikesObject, writings: writingsObject } = Astro.locals.globalState;
+const atlasObject = {
+  waypoints: waypointsObject.total,
+  books: booksObject.total,
+  writings: writingsObject.total,
+  hikes: hikesObject.total,
+};
+
+const atlas = Object.entries(atlasObject).map(([key, value]) => {
+  let icon = "lucide:file";
+  let label = key;
+
+  switch (key) {
+    case "waypoints":
+      icon = "lucide:map-pinned";
+      label = "Total Waypoints";
+      break;
+    case "books":
+      icon = "lucide:book-open";
+      label = "Total Books";
+      break;
+    case "hikes":
+      icon = "lucide:compass";
+      label = "Total Hikes";
+      break;
+    case "writings":
+      icon = "lucide:pen-tool";
+      label = "Total Writings";
+      break;
+  }
+
+  return {
+    name: key,
+    value: value as number,
+    icon,
+    label,
+  };
+});
+---
+
+<Layout>
+  <title slot="head">The Atlas | Andrea Vassallo</title>
+
+  <Hero>
+    <span slot="antiheading">Explore</span>
+    <span slot="heading">The Atlas,<br /><span class="text-primary">all the resources</span></span>
+    <span slot="subheading">
+      A navigable map of everything I create and collect: growing notes, books that have shaped me, published articles
+      and explored trails.
+    </span>
+    <span slot="stats">
+      <div class="mt-12 grid grid-cols-2 md:grid-cols-4 gap-4">
+        {
+          atlas.map((stat) => (
+            <StatCard stat={stat.value} label={stat.label}>
+              <span slot="icon">
+                <Icon name={stat.icon} class="lucide lucide-file-text h-4 w-4 text-primary" />
+              </span>
+            </StatCard>
+          ))
+        }
+      </div>
+    </span>
+  </Hero>
+
+  <SearchableContent
+    class="my-10"
+    searchParams={{ collections: ["books", "waypoints", "writings", "hikes"] }}
+    itemSize="L"
+    filters={await Promise.all([statusFilter(), topicFilter(), collectionFilter()])}
+    gridType="masonry"
+  />
+</Layout>

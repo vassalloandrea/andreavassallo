@@ -1,0 +1,34 @@
+---
+import ContentSidebar from "@components/content/ContentSidebar.astro";
+import Prose from "@components/ui/Prose.astro";
+import { getMdxComponents } from "src/lib/rendering";
+import { render } from "astro:content";
+import SidebarLayout from "@layouts/SidebarLayout.astro";
+
+import type { ZendoCollectionEntry } from "src/lib/zendo/content";
+
+export interface Props {
+  entry: ZendoCollectionEntry;
+}
+
+const { entry } = Astro.props;
+const { Content } = await render(entry);
+---
+
+<SidebarLayout>
+  <slot name="meta" slot="meta" />
+  <slot name="navigation" slot="navigation" />
+  <slot name="topics" slot="topics" />
+
+  <Fragment slot="title">
+    {entry.data.title}
+  </Fragment>
+
+  <slot name="sidebar" slot="sidebar">
+    <ContentSidebar entry={entry} />
+  </slot>
+
+  <Prose>
+    <Content components={getMdxComponents()} />
+  </Prose>
+</SidebarLayout>

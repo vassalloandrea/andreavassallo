@@ -1,0 +1,36 @@
+---
+import BookCard from "@components/content/books/BookCard.astro";
+import TopicCard from "@components/content/topics/TopicCard.astro";
+import WaypointCard from "./waypoints/WaypointCard.astro";
+import WritingCard from "./writings/WritingCard.astro";
+import HikeCard from "./hikes/HikeCard.astro";
+
+import type { CollectionEntry } from "astro:content";
+import type { ZendoCollectionEntry } from "src/lib/zendo/content";
+
+interface Props {
+  content: ZendoCollectionEntry;
+  cardSize?: "1x1" | "2x1" | "1x2" | "2x2";
+}
+
+const { content, cardSize } = Astro.props;
+---
+
+{
+  (() => {
+    switch (content.collection) {
+      case "books":
+        return <BookCard book={content as CollectionEntry<"books">} />;
+      case "waypoints":
+        return <WaypointCard waypoint={content as CollectionEntry<"waypoints">} cardSize={cardSize} />;
+      case "writings":
+        return <WritingCard writing={content as CollectionEntry<"writings">} />;
+      case "hikes":
+        return <HikeCard hike={content as CollectionEntry<"hikes">} />;
+      case "topics":
+        return <TopicCard topic={content as CollectionEntry<"topics">} />;
+      default:
+        return null;
+    }
+  })()
+}

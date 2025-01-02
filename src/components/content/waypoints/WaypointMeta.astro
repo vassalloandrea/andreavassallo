@@ -1,0 +1,62 @@
+---
+import { render } from "astro:content";
+
+import Pill from "@components/ui/Pill.astro";
+import Icon from "node_modules/astro-icon/components/Icon.astro";
+
+import type { CollectionEntry } from "astro:content";
+import ContentStatus from "../ContentStatus.astro";
+import { cn } from "src/lib/utils";
+
+export interface Props {
+  content: CollectionEntry<"waypoints">;
+  meta: "readingTime" | "topics" | "status" | "createdAt" | "updatedAt";
+  class?: string;
+}
+
+const { content, meta, class: className } = Astro.props;
+const { remarkPluginFrontmatter } = await render(content);
+---
+
+{
+  meta === "readingTime" && (
+    <span class={cn("flex items-center gap-1", className)}>
+      <Icon name="lucide:clock" class="h-3 w-3" />
+      {remarkPluginFrontmatter.readingTime}
+      {remarkPluginFrontmatter.readingTime != 1 ? " mins" : " min"} read
+    </span>
+  )
+}
+
+{
+  meta === "topics" && content.data.topics && content.data.topics.length > 0 && (
+    <div class={cn("flex flex-wrap gap-2", className)}>
+      {content.data.topics?.map((topic) => (
+        <Pill class="px-2.5 py-1 text-xs capitalize text-muted-foreground">{topic.id}</Pill>
+      ))}
+    </div>
+  )
+}
+
+{
+  meta === "status" && content.data.status && (
+    <Pill variant="secondary" class={cn("flex flex-wrap gap-2 px-2 py-0.5", className)}>
+      <ContentStatus status={content.data.status} iconClass="h-3 w-3" />
+      <span class="capitalize">{content.data.status}</span>
+    </Pill>
+  )
+}
+
+{
+  (meta === "createdAt" || meta === "updatedAt") && content.data.createdAt && (
+    <span class={cn("text-sm text-muted-foreground", className)}>
+      <Icon name="lucide:calendar" class="h-3 w-3 inline-block mb-1 md:mb-0.5" />{" "}
+      Revised on{" "}
+      {new Date(content.data[meta]).toLocaleDateString("en-US", {
+        year: "numeric",
+        month: "long",
+        day: "numeric",
+      })}
+    </span>
+  )
+}

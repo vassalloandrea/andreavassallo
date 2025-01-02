@@ -1,0 +1,112 @@
+---
+import ThemeToggle from "@components/ui/ThemeToggle.astro";
+import Link from "@components/ui/Link.astro";
+import Dropdown from "@components/ui/dropdowns/Dropdown.astro";
+import DropdownItem from "@components/ui/dropdowns/DropdownItem.astro";
+import { getHeaderNavigation, isItemActive, type NavigationItem, type NavigationLeaf } from "src/lib/navigation";
+import SearchIcon from "./SearchIcon.astro";
+import CloseIcon from "./CloseIcon.astro";
+import MenuIcon from "./MenuIcon.astro";
+import Background from "../Background.astro";
+
+import localMountains from "../../../data/mountains.png";
+import { Icon } from "astro-icon/components";
+
+const currentPath = Astro.url.pathname;
+const headerNavigation = getHeaderNavigation();
+---
+
+<header
+  class="fixed top-0 left-0 right-0 z-50 font-sans bg-background text-xl overflow-hidden"
+  data-controller="navbar"
+>
+  <Background image={localMountains} reverse class="absolute h-[40vh] md:h-[50vh] 2xl:h-[60vh]" />
+  <div class="container mx-auto px-4 lg:px-0 py-4 flex items-center justify-between" data-js-navbar>
+    <Link href="/" class="flex items-center gap-2 group">
+      <span class="font-serif text-xl tracking-tight text-foreground">
+        <Icon
+          name="lucide:mountain-snow"
+          class="inline h-8 w-8 text-primary transform transition-transform duration-200 ease-in-out group-hover:rotate-6"
+        />
+      </span>
+    </Link>
+
+    <nav class="hidden md:flex items-center gap-6 text-sm">
+      {
+        headerNavigation.map((item: NavigationItem) => {
+          if (item.children && item.children.length > 0) {
+            return (
+              <div class="whitespace-nowrap">
+                <Dropdown label={item.text} href={item.href} active={isItemActive(item, currentPath)}>
+                  {item.children.map((child: NavigationLeaf) => (
+                    <DropdownItem href={child.href} active={isItemActive(child, currentPath)}>
+                      {child.text}
+                    </DropdownItem>
+                  ))}
+                </Dropdown>
+              </div>
+            );
+          } else {
+            return (
+              <Link href={item.href} variant="secondary" class="text-sm" active={isItemActive(item, currentPath)}>
+                {item.text}
+              </Link>
+            );
+          }
+        })
+      }
+
+      <div class="flex items-center gap-1">
+        <ThemeToggle device="desktop" />
+        <SearchIcon />
+      </div>
+    </nav>
+
+    <div class="flex items-center gap-x-1 md:hidden">
+      <ThemeToggle device="mobile" />
+      <SearchIcon />
+      <MenuIcon />
+    </div>
+  </div>
+
+  <div
+    class="fixed inset-0 h-screen shadow-lg bg-background transform translate-x-full transition-transform duration-300 ease-in-out z-50 md:hidden"
+    data-navbar-target="mobileMenu"
+  >
+    <nav class="flex flex-col p-4 h-full">
+      <div class="flex justify-end">
+        <CloseIcon />
+      </div>
+
+      <div class="flex flex-col space-y-2">
+        {
+          headerNavigation.flatMap((item: NavigationItem) => {
+            if (item.children && item.children.length > 0) {
+              return [
+                <Link
+                  href={item.href}
+                  variant="secondary"
+                  active={isItemActive(item, currentPath)}
+                  class="font-semibold text"
+                >
+                  {item.text}
+                </Link>,
+                ...item.children.map((child: NavigationLeaf) => (
+                  <Link href={child.href} variant="secondary" active={isItemActive(child, currentPath)} class="pl-4">
+                    {child.text}
+                  </Link>
+                )),
+              ];
+            } else {
+              return [
+                <Link href={item.href} variant="secondary" active={isItemActive(item, currentPath)}>
+                  {item.text}
+                </Link>,
+              ];
+            }
+          })
+        }
+      </div>
+    </nav>
+  </div>
+</header>

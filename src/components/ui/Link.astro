@@ -1,0 +1,29 @@
+---
+import type { HTMLAttributes } from "astro/types";
+import { isInternalUrl } from "src/lib/utils/url";
+
+export interface Props extends HTMLAttributes<"a"> {
+  variant?: "primary" | "secondary" | "tertiary" | "muted";
+  active?: boolean;
+}
+
+const { class: originalClass, variant = "primary", active, ...props } = Astro.props;
+---
+
+<a
+  target={isInternalUrl(String(props.href)) ? "_self" : "_blank"}
+  {...props}
+  class:list={[
+    "transition-all",
+
+    {
+      "text-foreground": !active && variant === "primary",
+      "text-muted-foreground hover:text-foreground transition-colors duration-300": !active && variant === "secondary",
+      "text-muted-foreground hover:text-primary transition-colors duration-300": !active && variant === "muted",
+      "text-primary hover:text-primary/80 transition-colors duration-300": !active && variant === "tertiary",
+      "text-foreground font-bold": active,
+    },
+
+    originalClass,
+  ]}><slot /></a
+>

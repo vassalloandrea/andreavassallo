@@ -1,0 +1,85 @@
+---
+import { search } from "src/lib/zendo/actions/search";
+import ContentGridFilter from "./ContentGridFilter.astro";
+import ContentGrid from "./ContentGrid.astro";
+import BentoGrid from "./BentoGrid.astro";
+import { cn } from "src/lib/utils";
+
+import type { HTMLAttributes } from "astro/types";
+import type { FilterConfig } from "src/lib/zendo/config";
+
+interface Props extends HTMLAttributes<"div"> {
+  searchParams: Parameters<typeof search>[0];
+  gridType?: "grid" | "masonry" | "bento";
+  itemSize?: "S" | "M" | "L" | "XL";
+  filters?: FilterConfig[];
+}
+
+const { searchParams, itemSize = "M", gridType = "grid", filters = [], class: className, ...rest } = Astro.props;
+
+const filtersWithUi = filters.filter(
+  (filter): filter is FilterConfig & { ui: NonNullable<FilterConfig["ui"]> } => filter.ui !== undefined
+);
+---
+
+<div
+  class={cn("space-y-4")}
+  data-controller="content-grid"
+  data-content-grid-search-params-value={JSON.stringify(searchParams)}
+  data-content-grid-filters-value={JSON.stringify(
+    filtersWithUi.reduce(
+      (acc, filter) => {
+        acc[filter.id] = ["all"];
+        return acc;
+      },
+      {} as Record<string, string[]>
+    )
+  )}
+  {...rest}
+>
+  <template data-content-grid-target="loadingTemplate">
+    <div class="col-span-full">
+      <p class="text-muted-foreground">Loading the results...</p>
+    </div>
+  </template>
+
+  <template data-content-grid-target="emptyTemplate">
+    <div class="col-span-full">
+      <p class="text-muted-foreground">Nothing here yet! Check back soon.</p>
+    </div>
+  </template>
+
+  <template data-content-grid-target="errorTemplate">
+    <div class="col-span-full">
+      <p class="text-muted-foreground">Failed to load the results.</p>
+    </div>
+  </template>
+
+  {
+    filtersWithUi.length > 0 && (
+      <div class="flex flex-col space-y-6">
+        {filtersWithUi.map(async (filter) => (
+          <ContentGridFilter filterCategory={filter.id} style={filter.style} items={await filter.ui.getItems()} />
+        ))}
+      </div>
+    )
+  }
+
+  <template data-content-grid-target="cardTemplate">
+    <div
+      class={cn("relative z-20", gridType === "grid" ? "mb-4" : "mb-4 break-inside-avoid")}
+      data-controller="content-card"
+      data-content-card-id-value=""
+      data-content-card-collection-value=""
+    >
+    </div>
+  </template>
+
+  {gridType === "bento" && <BentoGrid data-content-grid-target="grid" class={className} />}
+
+  {
+    gridType !== "bento" && (
+      <ContentGrid itemSize={itemSize} layoutType={gridType} data-content-grid-target="grid" class={className} />
+    )
+  }
+</div>

@@ -1,0 +1,111 @@
+---
+import { getEntry } from "astro:content";
+import { Icon } from "astro-icon/components";
+
+import Layout from "@layouts/Layout.astro";
+import HikeContentDetail from "@components/content/hikes/HikeContentDetail.astro";
+import HikeMeta from "@components/content/hikes/HikeMeta.astro";
+import Pill from "@components/ui/Pill.astro";
+import HikeGallery from "@components/content/hikes/HikeGallery.astro";
+import HikeSidebar from "@components/content/hikes/HikeSidebar.astro";
+
+import { cn } from "src/lib/utils";
+
+const { id } = Astro.params;
+
+if (!id) {
+  return new Response(null, { status: 404, statusText: "Not Found" });
+}
+
+const hike = await getEntry("hikes", id);
+
+if (!hike) {
+  return new Response(null, { status: 404, statusText: "Not Found" });
+}
+---
+
+<title slot="head">{hike.data.title} | Andrea Vassallo</title>
+
+<Layout>
+  <HikeContentDetail entry={hike}>
+    <Fragment slot="badges">
+      <div class="flex gap-2 items-center">
+        <Pill
+          variant="secondary"
+          class={cn(
+            "inline-flex items-center justify-center rounded-md px-2 py-0.5 text-xs font-medium w-fit whitespace-nowrap shrink-0 [&>svg]:size-3 gap-1 [&>svg]:pointer-events-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive transition-[color,box-shadow] overflow-hidden border-transparent",
+            hike.data.difficulty === "Hard" && "bg-destructive/10 text-destructive border-0",
+            hike.data.difficulty === "Medium" && "bg-amber-500/10 text-amber-600 dark:text-amber-400 border-0",
+            hike.data.difficulty === "Easy" && "bg-primary/10 text-primary border-0"
+          )}
+        >
+          {hike.data.difficulty}
+        </Pill>
+        <HikeMeta content={hike} meta="type" />
+        <HikeMeta content={hike} meta="region" />
+        <HikeMeta content={hike} meta="slept" />
+        {
+          hike.data.ferrata && (
+            <span class={cn("flex items-center md:justify-center justify-end")}>
+              <Pill variant="tertiary">
+                <Icon name="lucide:cable" class="w-3 h-3" /> Via Ferrata
+              </Pill>
+            </span>
+          )
+        }
+        {
+          hike.data.mountaineering && (
+            <Pill variant="tertiary">
+              <Icon name="lucide:pickaxe" class="w-3 h-3" /> Mountaineering
+            </Pill>
+          )
+        }
+      </div>
+    </Fragment>
+
+    <Fragment slot="title">
+      {hike.data.title}
+    </Fragment>
+
+    <Fragment slot="gallery">
+      <HikeGallery hike={hike} />
+    </Fragment>
+
+    <Fragment slot="meta">
+      <div class="flex gap-4 items-center">
+        <HikeMeta content={hike} meta="feedback_stars" />
+        <HikeMeta content={hike} meta="publishedOn" />
+      </div>
+    </Fragment>
+
+    <Fragment slot="route">
+      <div class="flex items-center gap-3 mb-8 p-4 bg-secondary/30 rounded-xl">
+        <Icon name="lucide:route" class="lh-5 w-5 text-primary mt-0.5 shrink-0" />
+        <div>
+          <span class="text-xs font-medium text-muted-foreground uppercase tracking-wide">Route</span>
+          <p class="text-foreground">
+            {hike.data.route}
+          </p>
+        </div>
+      </div>
+    </Fragment>
+
+    <Fragment slot="desktop_sidebar">
+      <HikeSidebar hike={hike} mobile={false} />
+    </Fragment>
+
+    <Fragment slot="mobile_sidebar">
+      <HikeSidebar hike={hike} mobile={true} />
+    </Fragment>
+
+    <Fragment slot="navigation">
+      <a
+        href="/hikes"
+        class="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors mb-8"
+      >
+        <Icon name="lucide:arrow-left" class="w-4 h-4" />
+        Back to hikes
+      </a>
+    </Fragment>
+  </HikeContentDetail>
+</Layout>

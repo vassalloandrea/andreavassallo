@@ -1,0 +1,15 @@
+---
+import { format } from "date-fns";
+
+interface Props {
+  date: string | Date;
+}
+
+const { date } = Astro.props;
+const parsedDate = new Date(date);
+const absoluteDate = format(parsedDate, "MMMM d, yyyy 'at' h:mm a");
+---
+
+<span title={absoluteDate} data-controller="relative-date" data-absolute-date={parsedDate.toISOString()}>
+  {absoluteDate.toLocaleString()}
+</span>

@@ -1,0 +1,30 @@
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    environment:
+      - HOST=0.0.0.0
+      - PORT=4321
+    restart: always
+
+  nginx:
+    build:
+      context: .
+      dockerfile: Dockerfile.nginx
+    restart: always
+    depends_on:
+      - app
+    expose:
+      - "80"
+
+  warmer:
+    build:
+      context: .
+      dockerfile: Dockerfile.warmer
+    restart: always
+    depends_on:
+      - nginx
+    environment:
+      - SITE_HOST=${SITE_HOST:-localhost:4321}
+    entrypoint: ["/bin/sh", "/warmer.sh"]

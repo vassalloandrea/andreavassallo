@@ -1,0 +1,13 @@
+---
+export interface Props {
+  language: "en" | "it";
+}
+
+const { language } = Astro.props;
+const flag = language === "en" ? "🇬🇧" : "🇮🇹";
+const languageName = language === "en" ? "English" : "Italian";
+---
+
+<span title={languageName}>
+  {flag}
+</span>

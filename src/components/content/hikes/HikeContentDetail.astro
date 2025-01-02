@@ -1,0 +1,53 @@
+---
+import { render } from "astro:content";
+
+import Prose from "@components/ui/Prose.astro";
+import { getMdxComponents } from "src/lib/rendering";
+
+import type { ZendoCollectionEntry } from "src/lib/zendo/content";
+
+interface Props {
+  entry: ZendoCollectionEntry;
+  class?: string;
+}
+
+const { class: className, entry } = Astro.props;
+const { Content } = await render(entry);
+---
+
+<div class:list={["mb-10", className]}>
+  <div>
+    <slot name="navigation" />
+  </div>
+
+  <div class="mb-8">
+    <div class="flex flex-wrap items-center gap-3 mb-4">
+      <slot name="badges" />
+    </div>
+
+    <h1 class="font-serif text-3xl md:text-4xl lg:text-5xl text-foreground mb-3">
+      <slot name="title" />
+    </h1>
+
+    <div class="flex flex-wrap items-center gap-4 text-muted-foreground">
+      <slot name="meta" />
+    </div>
+  </div>
+
+  <div class="mb-10">
+    <slot name="gallery" />
+  </div>
+
+  <slot name="mobile_sidebar" />
+
+  <div class="grid grid-cols-1 lg:grid-cols-[1fr_320px] gap-10">
+    <div class="space-y-8">
+      <slot name="route" />
+      <Prose>
+        <Content components={getMdxComponents()} />
+      </Prose>
+    </div>
+
+    <slot name="desktop_sidebar" />
+  </div>
+</div>

@@ -1,0 +1,62 @@
+---
+import { cn } from "src/lib/utils";
+
+import ContentCard from "../ContentCard.astro";
+
+import type { ZendoCollectionEntry } from "src/lib/zendo/content";
+import type { HTMLAttributes } from "astro/types";
+
+interface Props extends HTMLAttributes<"div"> {
+  items?: ZendoCollectionEntry[];
+  itemSize: "S" | "M" | "L" | "XL";
+  layoutType?: "grid" | "masonry";
+}
+
+const { items, itemSize, layoutType = "grid", class: className, ...props } = Astro.props;
+
+function getGridColumnsForSize(size: "S" | "M" | "L" | "XL"): string {
+  switch (size) {
+    case "S":
+      return "grid-cols-1 sm:grid-cols-2 lg:grid-cols-4";
+    case "M":
+      return "grid-cols-1 sm:grid-cols-2 lg:grid-cols-3";
+    case "L":
+      return "grid-cols-1 sm:grid-cols-2 lg:grid-cols-2";
+    case "XL":
+      return "grid-cols-1";
+  }
+}
+
+function getMasonryColumnsForSize(size: "S" | "M" | "L" | "XL"): string {
+  switch (size) {
+    case "S":
+      return "columns-1 sm:columns-2 lg:columns-4";
+    case "M":
+      return "columns-1 sm:columns-2 lg:columns-3";
+    case "L":
+      return "columns-1 sm:columns-2 lg:columns-2";
+    case "XL":
+      return "columns-1";
+  }
+}
+---
+
+<div
+  class={cn(
+    layoutType === "grid"
+      ? `grid ${getGridColumnsForSize(itemSize)} gap-4`
+      : `gap-4 [column-fill:balance] ${getMasonryColumnsForSize(itemSize)}`,
+    className
+  )}
+  {...props}
+>
+  {
+    items?.map((item) => (
+      <div
+        class={cn("mb-4 z-20 relative", layoutType === "grid" ? "" : "break-inside-avoid inline-block w-full")}
+      >
+        <ContentCard content={item} />
+      </div>
+    ))
+  }
+</div>

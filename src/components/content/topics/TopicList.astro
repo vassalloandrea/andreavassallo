@@ -1,0 +1,26 @@
+---
+import type { ReferenceDataEntry } from "astro:content";
+import { getCollection } from "astro:content";
+import Link from "@components/ui/Link.astro";
+
+export interface Props {
+  topics?: ReferenceDataEntry<"topics", string>[];
+}
+
+const { topics } = Astro.props;
+const allTopics = await getCollection("topics");
+---
+
+<span>
+  {" "}
+  {
+    topics?.map((topic, index) => (
+      <>
+        <Link href={`/topics/${topic.id}`} variant="muted">
+          {allTopics.find((t) => t.id === topic.id)?.data.title}
+        </Link>{index < topics.length - 1 ? ", " : ""}
+      </>
+    ))
+  }
+  {" "}
+</span>

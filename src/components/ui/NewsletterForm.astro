@@ -1,0 +1,44 @@
+---
+import { Icon } from "astro-icon/components";
+
+import Button from "./Button.astro";
+
+import { cn } from "src/lib/utils";
+---
+
+<form
+  action="https://buttondown.com/api/emails/embed-subscribe/andreavassallo"
+  method="post"
+  class="embeddable-buttondown-form font-sans w-full max-w-xs relative"
+  data-controller="newsletter-form"
+  data-action="submit->newsletter-form#submit"
+>
+  <div class="flex items-center w-full gap-2">
+    <label for="bd-email" class="sr-only">Email address</label>
+    <input
+      type="email"
+      name="email"
+      id="bd-email"
+      required
+      class={cn(
+        "flex bg-secondary h-9 w-full rounded-md border border-input px-3 py-1 text-sm shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium",
+        "placeholder:text-muted-foreground focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-50 focus:z-10"
+      )}
+      placeholder="your@email.com"
+      data-newsletter-form-target="input"
+    />
+    <Button
+      type="submit"
+      aria-label="Subscribe"
+      value="Subscribe"
+      class="rounded-full px-4 focus:z-10 p-3 flex items-center bg-primary/60"
+      variant="default"
+      data-newsletter-form-target="button"
+    >
+      <Icon name="lucide:send" class="size-4" />
+    </Button>
+  </div>
+  <p hidden data-newsletter-form-target="message" class="my-2 text-xs text-green-600 dark:text-green-400 font-medium">
+    Thanks for subscribing! Check your inbox.
+  </p>
+</form>

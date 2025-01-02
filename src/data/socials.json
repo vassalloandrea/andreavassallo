@@ -1,0 +1,32 @@
+[
+  {
+    "slug": "email",
+    "name": "Email",
+    "icon": "lucide:send",
+    "url": "mailto:hello@andreavassallo.it"
+  },
+  {
+    "slug": "github",
+    "name": "GitHub",
+    "icon": "entypo-social:github",
+    "url": "https://github.com/vassalloandrea"
+  },
+  {
+    "slug": "linkedin",
+    "name": "LinkedIn",
+    "icon": "lucide:linkedin",
+    "url": "https://www.linkedin.com/in/anvassallo/"
+  },
+  {
+    "slug": "instagram",
+    "name": "Instagram",
+    "icon": "lucide:instagram",
+    "url": "https://instagram.com/andreavassallo__"
+  },
+  {
+    "slug": "medium",
+    "name": "Medium",
+    "icon": "entypo-social:medium",
+    "url": "https://andreavassallolt.medium.com/"
+  }
+]

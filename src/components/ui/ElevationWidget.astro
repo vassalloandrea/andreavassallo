@@ -1,0 +1,108 @@
+---
+import { Icon } from "astro-icon/components";
+
+interface Props {
+  elevation: number;
+  latestHike: string;
+  peakSleeps: number;
+}
+
+const { elevation, latestHike, peakSleeps } = Astro.props;
+---
+
+<div data-controller="elevation-widget" data-elevation-widget-elevation-value={elevation}>
+  <!-- Desktop — hover card -->
+  <div class="fixed bottom-6 right-6 z-40 hidden xl:block animate-float max-w-55">
+    <div
+      class="bg-card/90 backdrop-blur-md border border-border/50 rounded-2xl p-4 shadow-lg hover:shadow-xl transition-all duration-300 group hover:scale-105"
+    >
+      <div class="flex items-center gap-3">
+        <div class="h-10 w-10 rounded-full bg-primary/10 flex items-center justify-center">
+          <Icon name="lucide:mountain" class="h-5 w-5 text-primary" />
+        </div>
+        <div class="space-y-0.5">
+          <p class="text-xs text-muted-foreground">Current Elevation</p>
+          <p data-elevation-widget-target="desktopValue" class="text-lg font-serif text-foreground tabular-nums">
+            {elevation}m
+          </p>
+        </div>
+      </div>
+
+      <div
+        class="mt-3 pt-3 border-t border-border/50 space-y-2 opacity-0 max-h-0 overflow-hidden group-hover:opacity-100 group-hover:max-h-20 transition-all duration-300"
+      >
+        <div class="flex items-center gap-2 text-xs text-muted-foreground">
+          <Icon name="lucide:map-pin" class="h-3 w-3 text-primary" />
+          <span>Last hike: {latestHike}</span>
+        </div>
+        <div class="flex items-center gap-2 text-xs text-muted-foreground">
+          <Icon name="lucide:sunrise" class="h-3 w-3 text-primary" />
+          <span>Peak sleeps: {peakSleeps} nights</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Mobile — compact pill trigger -->
+  <button
+    type="button"
+    data-action="elevation-widget#open"
+    aria-label="Show elevation info"
+    class="fixed bottom-4 right-4 z-40 xl:hidden flex items-center gap-2 bg-card/90 backdrop-blur-md border border-border/50 rounded-full py-2 px-3 shadow-lg active:scale-95 transition-transform"
+  >
+    <Icon name="lucide:mountain" class="h-4 w-4 text-primary" />
+    <span data-elevation-widget-target="mobileValue" class="text-sm font-serif tabular-nums text-foreground"
+      >{elevation}m</span
+    >
+  </button>
+
+  <!-- Mobile — expanded bottom sheet -->
+  <div data-elevation-widget-target="sheet" class="fixed inset-0 z-50 xl:hidden hidden">
+    <!-- Backdrop -->
+    <div
+      data-action="click->elevation-widget#close"
+      class="absolute inset-0 bg-background/60 backdrop-blur-sm animate-in fade-in duration-200"
+      role="button"
+      tabindex="0"
+      aria-label="Close elevation info"
+    >
+    </div>
+
+    <!-- Sheet -->
+    <div
+      class="absolute bottom-0 inset-x-0 bg-card border-t border-border rounded-t-2xl p-5 pb-8 animate-in slide-in-from-bottom duration-300 shadow-2xl"
+    >
+      <div class="flex items-center justify-between mb-4">
+        <h3 class="text-sm font-medium text-muted-foreground uppercase tracking-wide">Current Elevation</h3>
+        <button
+          type="button"
+          data-action="elevation-widget#close"
+          class="h-8 w-8 rounded-full bg-secondary flex items-center justify-center text-muted-foreground hover:text-foreground transition-colors"
+          aria-label="Close"
+        >
+          <Icon name="lucide:x" class="h-4 w-4" />
+        </button>
+      </div>
+
+      <div class="flex items-center gap-4 mb-5">
+        <div class="h-12 w-12 rounded-full bg-primary/10 flex items-center justify-center">
+          <Icon name="lucide:mountain" class="h-6 w-6 text-primary" />
+        </div>
+        <p data-elevation-widget-target="sheetValue" class="text-3xl font-serif text-foreground tabular-nums">
+          {elevation}m
+        </p>
+      </div>
+
+      <div class="space-y-3 pt-4 border-t border-border/50">
+        <div class="flex items-center gap-3 text-sm text-muted-foreground">
+          <Icon name="lucide:map-pin" class="h-4 w-4 text-primary shrink-0" />
+          <span>Last hike: {latestHike}</span>
+        </div>
+        <div class="flex items-center gap-3 text-sm text-muted-foreground">
+          <Icon name="lucide:sunrise" class="h-4 w-4 text-primary shrink-0" />
+          <span>Peak sleeps: {peakSleeps} nights</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

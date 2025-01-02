@@ -1,0 +1,160 @@
+---
+import Pill from "@components/ui/Pill.astro";
+import { Icon } from "astro-icon/components";
+
+import type { CollectionEntry } from "astro:content";
+import { cn } from "src/lib/utils";
+
+export interface Props {
+  content: CollectionEntry<"hikes">;
+  meta:
+    | "difficulty"
+    | "feedback"
+    | "slept"
+    | "ferrata"
+    | "mountaineering"
+    | "distance"
+    | "gain"
+    | "totalTime"
+    | "type"
+    | "region"
+    | "feedback_stars"
+    | "publishedOn";
+  class?: string;
+}
+
+const { content, meta, class: className } = Astro.props;
+---
+
+{
+  meta === "difficulty" && (
+    <Pill variant="secondary" class={className}>
+      {content.data.difficulty}
+    </Pill>
+  )
+}
+
+{
+  meta === "feedback" && (
+    <div class={cn("flex items-center gap-0.5", className)}>
+      {Array.from({ length: 5 }).map((_number, index) => {
+        if (index < content.data.feedback) {
+          return <Icon name="lucide:mountain" class="w-3 h-3 text-accent" />;
+        }
+
+        return <Icon name="lucide:mountain" class="w-3 h-3 text-muted" />;
+      })}
+    </div>
+  )
+}
+
+{
+  meta === "feedback_stars" && (
+    <div class={cn("flex items-center gap-0.5", className)}>
+      {Array.from({ length: 5 }).map((_number, index) => {
+        const isFilled = index < content.data.feedback;
+
+        return (
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 24 24"
+            class="w-5 h-5"
+            fill={isFilled ? "var(--accent)" : "var(--muted)"}
+            stroke={isFilled ? "var(--accent)" : "var(--muted)"}
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <path d="M11.525 2.295a.53.53 0 0 1 .95 0l2.31 4.679a2.12 2.12 0 0 0 1.595 1.16l5.166.756a.53.53 0 0 1 .294.904l-3.736 3.638a2.12 2.12 0 0 0-.611 1.878l.882 5.14a.53.53 0 0 1-.771.56l-4.618-2.428a2.12 2.12 0 0 0-1.973 0L6.396 21.01a.53.53 0 0 1-.77-.56l.881-5.139a2.12 2.12 0 0 0-.611-1.879L2.16 9.795a.53.53 0 0 1 .294-.906l5.165-.755a2.12 2.12 0 0 0 1.597-1.16z" />
+          </svg>
+        );
+      })}
+    </div>
+  )
+}
+
+{
+  meta === "slept" && content.data.slept && (
+    <Pill variant="secondary" title="I slept on top" class={cn("flex gap-1", className)}>
+      <Icon name="lucide:tent-tree" class="w-3 h-3" />
+      Slept on top
+    </Pill>
+  )
+}
+
+{
+  meta === "ferrata" && content.data.ferrata && (
+    <Pill variant="secondary" title="Via ferrata" class={cn("flex gap-1 items-center", className)}>
+      <Icon name="lucide:cable" class="w-3 h-3" />
+      Via ferrata
+    </Pill>
+  )
+}
+
+{
+  meta === "mountaineering" && content.data.mountaineering && (
+    <Pill variant="secondary" title="Mountaineering route" class={cn("flex gap-1 items-center", className)}>
+      <Icon name="lucide:pickaxe" class="w-3 h-3" />
+      Mountaineering
+    </Pill>
+  )
+}
+
+{
+  meta === "gain" && (
+    <span class={cn("flex items-center md:justify-center", className)}>
+      <Icon name="lucide:trending-up" class="w-4 h-4 mr-1 text-primary" />+{content.data.gain}m
+    </span>
+  )
+}
+
+{
+  meta === "totalTime" && (
+    <span class={cn("flex items-center md:justify-center justify-end", className)}>
+      <Icon name="lucide:clock" class="w-4 h-4 mr-1 text-primary" />
+      {content.data.totalTime}
+    </span>
+  )
+}
+
+{
+  meta === "distance" && (
+    <span class={cn("flex items-center md:justify-center", className)}>
+      <Icon name="lucide:footprints" class="w-4 h-4 mr-1 text-primary" />
+      {content.data.distance}km
+    </span>
+  )
+}
+
+{
+  meta === "type" && (
+    <span class={cn("flex items-center md:justify-center justify-end", className)}>
+      <Pill variant="tertiary">
+        <Icon name="lucide:route" class="w-3 h-3" /> {content.data.type}
+      </Pill>
+    </span>
+  )
+}
+
+{
+  meta === "region" && (
+    <span class={cn("flex items-center md:justify-center justify-end", className)}>
+      <Pill variant="tertiary">
+        <Icon name="lucide:map-pin" class="w-3 h-3" /> {content.data.region}
+      </Pill>
+    </span>
+  )
+}
+
+{
+  meta === "publishedOn" && (
+    <span class={cn("flex gap-0.5 items-center md:justify-center justify-end text-sm", className)}>
+      <Icon name="lucide:calendar" class="w-4 h-4 mr-1 -mt-0.5 text-foreground-muted" />
+      {new Date(content.data.publishedOn).toLocaleDateString("en-US", {
+        year: "numeric",
+        month: "long",
+        day: "numeric",
+      })}
+    </span>
+  )
+}

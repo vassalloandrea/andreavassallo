@@ -1,0 +1,58 @@
+---
+import { getEntry } from "astro:content";
+import { Icon } from "astro-icon/components";
+
+import Layout from "@layouts/Layout.astro";
+import ContentDetail from "@components/content/books/BookContentDetail.astro";
+import BookMeta from "@components/content/books/BookMeta.astro";
+import BookCover from "@components/content/books/BookCover.astro";
+
+const { id } = Astro.params;
+
+if (!id) {
+  return new Response(null, { status: 404, statusText: "Not Found" });
+}
+
+const book = await getEntry("books", id);
+
+if (!book) {
+  return new Response(null, { status: 404, statusText: "Not Found" });
+}
+---
+
+<title slot="head">{book.data.title} | Andrea Vassallo</title>
+
+<Layout>
+  <ContentDetail entry={book}>
+    <BookCover slot="cover" book={book} class="object-cover object-top w-57.25" />
+    <Fragment slot="meta">
+      <div class="flex items-center gap-2 text-muted-foreground mb-4">
+        <Icon name="lucide:user" class="w-5 h-5" />
+        <BookMeta content={book} meta="author" class="text-lg" />
+      </div>
+
+      <div class="flex gap-2 items-center mb-6">
+        <div class="flex items-center gap-1 text-sm text-primary">
+          <Icon name="lucide:refresh-cw" class="w-4 h-4" />
+          <BookMeta content={book} meta="revised" class="text-sm text-primary not-italic" />
+        </div>
+      </div>
+
+      <BookMeta content={book} meta="topics" />
+    </Fragment>
+
+    <Fragment slot="topics">
+      <BookMeta content={book} meta="topics" />
+    </Fragment>
+
+    <Fragment slot="navigation">
+      <a
+        href="/books"
+        class="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors mb-8"
+      >
+        <Icon name="lucide:arrow-left" class="w-4 h-4" />
+        Back to books
+      </a>
+    </Fragment>
+  </ContentDetail>
+</Layout>

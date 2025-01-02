@@ -1,0 +1,531 @@
+[
+  {
+    "ids": [
+      "About this space",
+      "about"
+    ],
+    "slug": "about",
+    "type": "pages",
+    "outboundLinks": [],
+    "inboundLinks": []
+  },
+  {
+    "ids": [
+      "How to build a Rails application with VueJS using JSX",
+      "2019-09-20-how-to-build-a-rails-application-with-vuejs-using-jsx"
+    ],
+    "slug": "2019-09-20-how-to-build-a-rails-application-with-vuejs-using-jsx",
+    "type": "writings",
+    "outboundLinks": [],
+    "inboundLinks": []
+  },
+  {
+    "ids": [
+      "Configure NextJS with Storybook and TailwindCSS",
+      "2020-12-21-configure-nextjs-with-storybook-and-tailwindcss"
+    ],
+    "slug": "2020-12-21-configure-nextjs-with-storybook-and-tailwindcss",
+    "type": "writings",
+    "outboundLinks": [],
+    "inboundLinks": []
+  },
+  {
+    "ids": [
+      "Better logs for ExpressJS using Winston and Morgan with Typescript",
+      "2021-01-19-better-logs-for-expressjs-using-winston-and-morgan-with-typescript"
+    ],
+    "slug": "2021-01-19-better-logs-for-expressjs-using-winston-and-morgan-with-typescript",
+    "type": "writings",
+    "outboundLinks": [],
+    "inboundLinks": []
+  },
+  {
+    "ids": [
+      "Strengthen a React Application with Github and GitHub Actions",
+      "2021-04-05-strengthen-a-react-application-with-github-and-github-actions"
+    ],
+    "slug": "2021-04-05-strengthen-a-react-application-with-github-and-github-actions",
+    "type": "writings",
+    "outboundLinks": [],
+    "inboundLinks": []
+  },
+  {
+    "ids": [
+      "React forms — useState vs useRef",
+      "2021-11-25-react-forms-usestate-vs-useref"
+    ],
+    "slug": "2021-11-25-react-forms-usestate-vs-useref",
+    "type": "writings",
+    "outboundLinks": [],
+    "inboundLinks": []
+  },
+  {
+    "ids": [
+      "What Your E-Commerce Agency Won’t Tell You, But Should",
+      "2025-12-17-what-your-e-commerce-agency-wont-tell-you-but-should"
+    ],
+    "slug": "2025-12-17-what-your-e-commerce-agency-wont-tell-you-but-should",
+    "type": "writings",
+    "outboundLinks": [],
+    "inboundLinks": []
+  },
+  {
+    "ids": [
+      "Stop Killing Your Margins: A Guide to Smarter E-Commerce Discounting",
+      "2026-02-11-stop-killing-your-margins-a-guide-to-smarter-e-commerce-discounting"
+    ],
+    "slug": "2026-02-11-stop-killing-your-margins-a-guide-to-smarter-e-commerce-discounting",
+    "type": "writings",
+    "outboundLinks": [],
+    "inboundLinks": []
+  },
+  {
+    "ids": [
+      "Blanket discounts destroy margins",
+      "blanket-discounts-destroy-margins"
+    ],
+    "slug": "blanket-discounts-destroy-margins",
+    "type": "waypoints",
+    "outboundLinks": [
+      {
+        "slug": "economies-of-scale",
+        "type": "waypoints"
+      },
+      {
+        "slug": "cogs",
+        "type": "waypoints"
+      }
+    ],
+    "inboundLinks": []
+  },
+  {
+    "ids": [
+      "COGS",
+      "cogs"
+    ],
+    "slug": "cogs",
+    "type": "waypoints",
+    "outboundLinks": [],
+    "inboundLinks": [
+      {
+        "slug": "blanket-discounts-destroy-margins",
+        "type": "waypoints"
+      }
+    ]
+  },
+  {
+    "ids": [
+      "Economies of scale",
+      "economies-of-scale"
+    ],
+    "slug": "economies-of-scale",
+    "type": "waypoints",
+    "outboundLinks": [],
+    "inboundLinks": [
+      {
+        "slug": "blanket-discounts-destroy-margins",
+        "type": "waypoints"
+      }
+    ]
+  },
+  {
+    "ids": [
+      "Kant Empiricism concept",
+      "kant-empiricism-concept"
+    ],
+    "slug": "kant-empiricism-concept",
+    "type": "waypoints",
+    "outboundLinks": [
+      {
+        "slug": "radical-empiricism",
+        "type": "waypoints"
+      }
+    ],
+    "inboundLinks": [
+      {
+        "slug": "radical-empiricism",
+        "type": "waypoints"
+      },
+      {
+        "slug": "rationalism",
+        "type": "waypoints"
+      }
+    ]
+  },
+  {
+    "ids": [
+      "Radical Empiricism",
+      "radical-empiricism"
+    ],
+    "slug": "radical-empiricism",
+    "type": "waypoints",
+    "outboundLinks": [
+      {
+        "slug": "kant-empiricism-concept",
+        "type": "waypoints"
+      }
+    ],
+    "inboundLinks": [
+      {
+        "slug": "kant-empiricism-concept",
+        "type": "waypoints"
+      },
+      {
+        "slug": "rationalism",
+        "type": "waypoints"
+      }
+    ]
+  },
+  {
+    "ids": [
+      "Rationalism",
+      "rationalism"
+    ],
+    "slug": "rationalism",
+    "type": "waypoints",
+    "outboundLinks": [
+      {
+        "slug": "radical-empiricism",
+        "type": "waypoints"
+      },
+      {
+        "slug": "kant-empiricism-concept",
+        "type": "waypoints"
+      }
+    ],
+    "inboundLinks": []
+  },
+  {
+    "ids": [
+      "Schwartz awareness levels",
+      "schwartz-awareness-levels"
+    ],
+    "slug": "schwartz-awareness-levels",
+    "type": "waypoints",
+    "outboundLinks": [],
+    "inboundLinks": []
+  },
+  {
+    "ids": [
+      "Search Engine Results Page",
+      "SERP",
+      "serp"
+    ],
+    "slug": "serp",
+    "type": "waypoints",
+    "outboundLinks": [],
+    "inboundLinks": []
+  },
+  {
+    "ids": [
+      "The Summit of Mind",
+      "the-summit-of-mind"
+    ],
+    "slug": "the-summit-of-mind",
+    "type": "waypoints",
+    "outboundLinks": [],
+    "inboundLinks": [
+      {
+        "slug": "lo-zen-e-larte-della-manutenzione-della-motocicletta",
+        "type": "books"
+      }
+    ]
+  },
+  {
+    "ids": [
+      "E-commerce",
+      "e-commerce"
+    ],
+    "slug": "e-commerce",
+    "type": "topics",
+    "outboundLinks": [],
+    "inboundLinks": []
+  },
+  {
+    "ids": [
+      "Marketing",
+      "marketing"
+    ],
+    "slug": "marketing",
+    "type": "topics",
+    "outboundLinks": [],
+    "inboundLinks": []
+  },
+  {
+    "ids": [
+      "personal-development",
+      "Personal Development"
+    ],
+    "slug": "personal-development",
+    "type": "topics",
+    "outboundLinks": [],
+    "inboundLinks": []
+  },
+  {
+    "ids": [
+      "Philosophy",
+      "philosophy"
+    ],
+    "slug": "philosophy",
+    "type": "topics",
+    "outboundLinks": [],
+    "inboundLinks": []
+  },
+  {
+    "ids": [
+      "Resilience",
+      "resilience"
+    ],
+    "slug": "resilience",
+    "type": "topics",
+    "outboundLinks": [],
+    "inboundLinks": []
+  },
+  {
+    "ids": [
+      "Software Development",
+      "software-development"
+    ],
+    "slug": "software-development",
+    "type": "topics",
+    "outboundLinks": [],
+    "inboundLinks": []
+  },
+  {
+    "ids": [
+      "Strategy",
+      "strategy"
+    ],
+    "slug": "strategy",
+    "type": "topics",
+    "outboundLinks": [],
+    "inboundLinks": []
+  },
+  {
+    "ids": [
+      "Circe's Peak",
+      "2020-07-05-circes-peak"
+    ],
+    "slug": "2020-07-05-circes-peak",
+    "type": "hikes",
+    "outboundLinks": [],
+    "inboundLinks": []
+  },
+  {
+    "ids": [
+      "Sorapis Lake",
+      "2020-07-27-sorapis-lake"
+    ],
+    "slug": "2020-07-27-sorapis-lake",
+    "type": "hikes",
+    "outboundLinks": [],
+    "inboundLinks": []
+  },
+  {
+    "ids": [
+      "Duchessa's Lake",
+      "2020-08-21-duchessas-lake"
+    ],
+    "slug": "2020-08-21-duchessas-lake",
+    "type": "hikes",
+    "outboundLinks": [],
+    "inboundLinks": []
+  },
+  {
+    "ids": [
+      "Lago Vivo Loop",
+      "2020-08-27-lago-vivo"
+    ],
+    "slug": "2020-08-27-lago-vivo",
+    "type": "hikes",
+    "outboundLinks": [],
+    "inboundLinks": []
+  },
+  {
+    "ids": [
+      "Monte Cacume",
+      "2020-09-04-monte-cacume"
+    ],
+    "slug": "2020-09-04-monte-cacume",
+    "type": "hikes",
+    "outboundLinks": [],
+    "inboundLinks": []
+  },
+  {
+    "ids": [
+      "Monte Viglio",
+      "2020-09-19-monte-viglio"
+    ],
+    "slug": "2020-09-19-monte-viglio",
+    "type": "hikes",
+    "outboundLinks": [],
+    "inboundLinks": []
+  },
+  {
+    "ids": [
+      "Semprevisa",
+      "2020-09-19-semprevisa"
+    ],
+    "slug": "2020-09-19-semprevisa",
+    "type": "hikes",
+    "outboundLinks": [],
+    "inboundLinks": []
+  },
+  {
+    "ids": [
+      "From Rocca di Papa to Nemi",
+      "2022-01-02-nemi"
+    ],
+    "slug": "2022-01-02-nemi",
+    "type": "hikes",
+    "outboundLinks": [],
+    "inboundLinks": []
+  },
+  {
+    "ids": [
+      "Monte Vettore",
+      "2022-07-16-monte-vettore"
+    ],
+    "slug": "2022-07-16-monte-vettore",
+    "type": "hikes",
+    "outboundLinks": [],
+    "inboundLinks": []
+  },
+  {
+    "ids": [
+      "Forca Resuni",
+      "2022-10-15-forca-resuni"
+    ],
+    "slug": "2022-10-15-forca-resuni",
+    "type": "hikes",
+    "outboundLinks": [],
+    "inboundLinks": []
+  },
+  {
+    "ids": [
+      "Monte Petrella",
+      "2022-10-30-monte-petrella"
+    ],
+    "slug": "2022-10-30-monte-petrella",
+    "type": "hikes",
+    "outboundLinks": [],
+    "inboundLinks": []
+  },
+  {
+    "ids": [
+      "Duchessa's Lake Loop",
+      "2023-07-28-duchessas-lake"
+    ],
+    "slug": "2023-07-28-duchessas-lake",
+    "type": "hikes",
+    "outboundLinks": [],
+    "inboundLinks": []
+  },
+  {
+    "ids": [
+      "Corno Piccolo",
+      "2023-08-19-corno-piccolo"
+    ],
+    "slug": "2023-08-19-corno-piccolo",
+    "type": "hikes",
+    "outboundLinks": [],
+    "inboundLinks": []
+  },
+  {
+    "ids": [
+      "Maschio d'Ariano",
+      "2023-11-18-maschio-dariano"
+    ],
+    "slug": "2023-11-18-maschio-dariano",
+    "type": "hikes",
+    "outboundLinks": [],
+    "inboundLinks": []
+  },
+  {
+    "ids": [
+      "Pienza and the Gladiator road",
+      "2023-11-25-pienza"
+    ],
+    "slug": "2023-11-25-pienza",
+    "type": "hikes",
+    "outboundLinks": [],
+    "inboundLinks": []
+  },
+  {
+    "ids": [
+      "Monte Terminillo",
+      "2025-09-28-monte-terminillo"
+    ],
+    "slug": "2025-09-28-monte-terminillo",
+    "type": "hikes",
+    "outboundLinks": [],
+    "inboundLinks": []
+  },
+  {
+    "ids": [
+      "Monte Terminilletto/Rinaldi Refuge",
+      "2026-01-31-monte-terminilletto"
+    ],
+    "slug": "2026-01-31-monte-terminilletto",
+    "type": "hikes",
+    "outboundLinks": [],
+    "inboundLinks": []
+  },
+  {
+    "ids": [
+      "E-Commerce C.O.R.E.",
+      "e-commerce-core"
+    ],
+    "slug": "e-commerce-core",
+    "type": "books",
+    "outboundLinks": [],
+    "inboundLinks": []
+  },
+  {
+    "ids": [
+      "Lo Zen E L’arte Della Manutenzione Della Motocicletta",
+      "lo-zen-e-l’arte-della-manutenzione-della-motocicletta",
+      "lo-zen-e-larte-della-manutenzione-della-motocicletta"
+    ],
+    "slug": "lo-zen-e-larte-della-manutenzione-della-motocicletta",
+    "type": "books",
+    "outboundLinks": [
+      {
+        "slug": "the-summit-of-mind",
+        "type": "waypoints"
+      }
+    ],
+    "inboundLinks": []
+  },
+  {
+    "ids": [
+      "Nel Mare Ci Sono I Coccodrilli",
+      "nel-mare-ci-sono-i-coccodrilli"
+    ],
+    "slug": "nel-mare-ci-sono-i-coccodrilli",
+    "type": "books",
+    "outboundLinks": [],
+    "inboundLinks": []
+  },
+  {
+    "ids": [
+      "Siddhartha",
+      "siddhartha"
+    ],
+    "slug": "siddhartha",
+    "type": "books",
+    "outboundLinks": [],
+    "inboundLinks": []
+  },
+  {
+    "ids": [
+      "The Subtle Art of Not Giving a F*ck",
+      "the-subtle-art-of-not-giving-a-f*ck",
+      "the-subtle-art-of-not-giving-a-fck"
+    ],
+    "slug": "the-subtle-art-of-not-giving-a-fck",
+    "type": "books",
+    "outboundLinks": [],
+    "inboundLinks": []
+  }
+]

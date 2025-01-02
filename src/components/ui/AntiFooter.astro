@@ -1,0 +1,34 @@
+---
+import { getCollection } from "astro:content";
+
+import { Icon } from "astro-icon/components";
+
+import Pill from "./Pill.astro";
+import NewsletterForm from "@components/ui/NewsletterForm.astro";
+
+const socials = await getCollection("socials");
+---
+
+<section id="about" class="py-12 scroll-mt-20  border-t border-border/50">
+  <div class="container mx-auto">
+    <div class="space-y-6">
+      <h3 class="font-serif text-xl text-foreground">Let's Connect</h3>
+      <p class="text-muted-foreground">
+        Always open to connect — whether it's about e-commerce, architecture, or a good hike.
+      </p>
+      <NewsletterForm />
+      <div class="flex flex-wrap gap-3">
+        {
+          socials.map((social) => (
+            <a href={social.data.url} target="_blank" rel="noopener noreferrer">
+              <Pill class="flex items-center" clickable>
+                <Icon name={social.data.icon} class="h-4 w-4 mr-2" />
+                {social.data.name}
+              </Pill>
+            </a>
+          ))
+        }
+      </div>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,44 @@
+---
+import Card from "@components/ui/Card.astro";
+import BookMeta from "@components/content/books/BookMeta.astro";
+import BookCover from "@components/content/books/BookCover.astro";
+import CardTitle from "@components/ui/card/CardTitle.astro";
+
+import type { CollectionEntry } from "astro:content";
+import { cn } from "src/lib/utils";
+
+interface Props {
+  book: CollectionEntry<"books">;
+}
+
+const { book } = Astro.props;
+---
+
+<div class="flex row flex-col items-center gap-y-5" data-slot="card">
+  <a href={`/books/${book.id}`}>
+    <BookCover book={book} class="object-cover object-top w-57.25" />
+  </a>
+
+  <a href={`/books/${book.id}`} class="w-full text-center">
+    <Card
+      class={cn(
+        "pt-0 rounded-none bg-transparent rounded-br-sm rounded-tr-sm border-none shadow-none",
+        "hover:bg-transparent hover:shadow-none"
+      )}
+    >
+      <div class="flex flex-col justify-center items-center border-none">
+        <BookMeta content={book} meta="topics" />
+
+        <CardTitle class="font-serif text-lg text-foreground group-hover:text-primary transition-colors duration-300">
+          <h3>{book.data.title}</h3>
+        </CardTitle>
+
+        <BookMeta content={book} meta="author" class="mb-2" />
+        <BookMeta content={book} meta="revised" class="mb-2" />
+        <!-- TODO: add published on -->
+        <!-- TODO: add progress on -->
+        <!-- TODO: add small review -->
+      </div>
+    </Card>
+  </a>
+</div>

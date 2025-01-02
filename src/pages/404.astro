@@ -1,0 +1,42 @@
+---
+import Icon from "node_modules/astro-icon/components/Icon.astro";
+import Layout from "../layouts/Layout.astro";
+import Button from "@components/ui/Button.astro";
+---
+
+<Layout title="404 - Uncharted Territory" class="flex flex-col items-center justify-center">
+  <div class="relative flex flex-col items-center justify-center overflow-hidden px-4 text-center">
+    <div class="relative z-10 max-w-lg">
+      <div class="mb-8 flex justify-center text-primary">
+        <Icon name="lucide:compass" class="h-16 w-16 stroke-primary" />
+      </div>
+
+      <h1
+        class="font-serif text-4xl md:text-5xl lg:text-6xl leading-tight text-balance text-foreground reveal-on-scroll is-visible"
+      >
+        404
+      </h1>
+      <h2 class="text-xl font-semibold uppercase tracking-widest text-primary mb-6">Uncharted Territory</h2>
+
+      <p
+        class="text md:text-lg text-muted-foreground leading-relaxed text-pretty reveal-on-scroll delay-100 is-visible mb-8"
+      >
+        It seems you have wandered off the map. The coordinates you are looking for do not correspond to any known trail
+        in this digital atlas.
+      </p>
+
+      <a href="/" class="flex justify-center">
+        <Button variant="default" size="lg" class="flex flex-row">
+          <Icon
+            name="lucide:home"
+            class="h-5 w-5 stroke-white transition-transform duration-300 ease-in-out group-hover:translate-x-1"
+          />
+          Return to Base Camp
+        </Button>
+      </a>
+
+      <!-- Decorative Fake Coordinates -->
+      <div class="mt-12 font-mono text-xs text-foreground-muted">LAT: UNKNOWN | LON: MISSING</div>
+    </div>
+  </div>
+</Layout>

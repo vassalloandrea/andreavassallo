@@ -1,0 +1,28 @@
+---
+import type { HTMLAttributes } from "astro/types";
+import Icon from "node_modules/astro-icon/components/Icon.astro";
+import { cn } from "src/lib/utils";
+
+export interface Props extends HTMLAttributes<"span"> {
+  status: "sketch" | "surveying" | "charted";
+  iconClass?: string;
+}
+
+const { status, class: className, iconClass, ...props } = Astro.props;
+
+const statusLabel = {
+  sketch: "Sketch",
+  surveying: "Surveying",
+  charted: "Charted",
+}[status];
+
+const statusIcon = {
+  sketch: "lucide:pencil",
+  surveying: "lucide:compass",
+  charted: "lucide:map-pinned",
+}[status];
+---
+
+<span title={statusLabel} class={className} {...props}>
+  <Icon name={statusIcon} class={cn("inline-block w-4 h-4", iconClass)} />
+</span>

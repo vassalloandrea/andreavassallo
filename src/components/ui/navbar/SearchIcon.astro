@@ -1,0 +1,16 @@
+---
+import Icon from "node_modules/astro-icon/components/Icon.astro";
+import Button from "../Button.astro";
+
+const { ...props } = Astro.props;
+---
+
+<Button
+  variant="ghost"
+  class="h-9 w-9 flex items-center justify-center rounded-full overflow-hidden text-foreground"
+  aria-label="Search"
+  data-js-command-palette-toggle
+  {...props}
+>
+  <Icon name="lucide:search" class="w-3.5 h-3.5" />
+</Button>

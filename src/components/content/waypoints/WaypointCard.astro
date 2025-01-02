@@ -1,0 +1,45 @@
+---
+import { getHtmlText, renderToString } from "src/lib/rendering";
+import WaypointMeta from "./WaypointMeta.astro";
+import CardContent from "@components/ui/card/CardContent.astro";
+import CardHeader from "@components/ui/card/CardHeader.astro";
+import LinkedCard from "@components/ui/LinkedCard.astro";
+import CardTitle from "@components/ui/card/CardTitle.astro";
+import ContentStatus from "../ContentStatus.astro";
+
+import type { CollectionEntry } from "astro:content";
+import { cn } from "src/lib/utils";
+
+interface Props {
+  waypoint: CollectionEntry<"waypoints">;
+  cardSize?: "1x1" | "2x1" | "1x2" | "2x2";
+}
+
+const { waypoint, cardSize } = Astro.props;
+const renderedWaypoint = await renderToString(waypoint);
+
+const cardId = `waypoint-card-${waypoint.id}`;
+---
+
+<LinkedCard href={`/waypoints/${waypoint.id}`} linkClass="h-full" class="h-full" id={cardId}>
+  <CardHeader class="pb-2">
+    <div class="flex items-center justify-between gap-2 mb-2">
+      <div class="flex items-center gap-1.5 text-xs text-primary">
+        <ContentStatus status={waypoint.data.status} />
+        <span class="mt-0.5 capitalize">{waypoint.data.status}</span>
+      </div>
+      <div class="flex items-center gap-1 text-xs text-muted-foreground">
+        <WaypointMeta content={waypoint} meta="readingTime" />
+      </div>
+    </div>
+    <CardTitle class="font-serif text-lg text-foreground group-hover:text-primary transition-colors duration-300">
+      <h3>{waypoint.data.title}</h3>
+    </CardTitle>
+  </CardHeader>
+  <CardContent class="space-y-3">
+    <p class={cn("card-paragraph text-sm text-muted-foreground leading-relaxed", cardSize === "2x2" ? "line-clamp-12" : "line-clamp-3")}>
+      <Fragment set:html={getHtmlText(renderedWaypoint)} />
+    </p>
+    <WaypointMeta content={waypoint} meta="topics" />
+  </CardContent>
+</LinkedCard>

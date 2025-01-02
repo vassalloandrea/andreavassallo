@@ -1,0 +1,25 @@
+---
+import { cn } from "src/lib/utils";
+
+interface Props {
+  class?: string;
+}
+
+const { class: className = "" } = Astro.props;
+---
+
+<section class={cn("mb-15", className)}>
+  <div class="space-y-4">
+    <p class="text-sm text-primary font-medium tracking-wide uppercase">
+      <slot name="antiheading" />
+    </p>
+
+    <h1 class="font-serif text-4xl md:text-5xl text-foreground leading-tight text-balance">
+      <slot name="heading" />
+    </h1>
+    <p class="text-lg text-muted-foreground max-w-xl leading-relaxed">
+      <slot name="subheading" />
+    </p>
+  </div>
+  <slot name="stats" />
+</section>

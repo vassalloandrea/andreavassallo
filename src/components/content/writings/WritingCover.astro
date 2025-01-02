@@ -1,0 +1,41 @@
+---
+import { Image } from "astro:assets";
+
+import { cn } from "src/lib/utils";
+
+import type { ImageMetadata } from "astro";
+import type { CollectionEntry } from "astro:content";
+
+async function fetchWritingCover(writing: CollectionEntry<"writings">): Promise<{ default: ImageMetadata }> {
+  const images = import.meta.glob<{ default: ImageMetadata }>("/src/content/assets/covers/*.jpg");
+
+  const cover = images[`/src/content/assets/covers/${writing.id.toLowerCase()}.jpg`];
+
+  if (!cover) {
+    throw new Error(`Cannot find cover for ${writing.id}`);
+  }
+
+  return await cover();
+}
+
+interface Props {
+  writing: CollectionEntry<"writings">;
+  class?: string;
+}
+
+const { writing, class: className } = Astro.props;
+const cover = await fetchWritingCover(writing);
+---
+
+<div class={cn("rounded-md overflow-hidden bg-muted relative aspect-3/2 border border-border", className)}>
+  <Image
+    src={cover.default}
+    alt={`${writing.data.title} cover`}
+    loading="lazy"
+    decoding="async"
+    quality={50}
+    format="webp"
+    width={600}
+    class="w-full h-full object-cover object-top md:grayscale-50 md:group-hover:grayscale-0 transition-all duration-300 ease-in-out"
+  />
+</div>

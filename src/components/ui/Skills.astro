@@ -1,0 +1,13 @@
+---
+import Pill from "./Pill.astro";
+
+const skills = ["Team Leadership", "E-commerce Strategy", "Software Architecture", "Fullstack Engineering"];
+---
+
+<div class="pt-4">
+  <div class="flex flex-wrap gap-3">
+    {skills.map((skill) => (
+      <Pill clickable>{skill}</Pill>
+    ))}
+  </div>
+</div>

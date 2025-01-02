@@ -1,0 +1,41 @@
+---
+import type { CollectionEntry } from "astro:content";
+// import TopicList from "@components/content/topics/TopicList.astro";
+// import RelativeDate from "@components/ui/RelativeDate.astro";
+import Pill from "@components/ui/Pill.astro";
+import RelativeDate from "@components/ui/RelativeDate.astro";
+import { cn } from "src/lib/utils";
+
+export interface Props {
+  content: CollectionEntry<"books">;
+  meta: "author" | "topics" | "revised";
+  class?: string;
+}
+
+const { content, meta, class: className } = Astro.props;
+---
+
+{meta === "author" && <p class={cn("text-sm text-muted-foreground", className)}>{content.data.author}</p>}
+
+{
+  meta === "topics" && (
+    <div class={cn("flex items-center gap-2 mb-1", className)}>
+      {content.data.completed ? (
+        <Pill class="px-2.5 py-1 text-xs text-primary mb-2">Completed</Pill>
+      ) : (
+        <Pill class="px-2.5 py-1 text-xs text-primary mb-2">In Progress</Pill>
+      )}
+      {content.data.topics?.map((topic) => (
+        <Pill class="px-2.5 py-1 text-xs capitalize text-muted-foreground mb-2">{topic.id}</Pill>
+      ))}
+    </div>
+  )
+}
+
+{
+  meta === "revised" && (
+    <p class={cn("text-xs italic font-thin text-muted-foreground", className)}>
+      Revisited <RelativeDate date={content.data.updatedAt} />
+    </p>
+  )
+}

@@ -1,0 +1,48 @@
+---
+import Link from "@components/ui/Link.astro";
+import MobileCollapsible from "@components/ui/MobileCollapsible.astro";
+import { cn } from "src/lib/utils";
+export interface Props {
+  title: string;
+  headings: {
+    depth: number;
+    text: string;
+    slug: string;
+  }[];
+}
+
+const { headings, title } = Astro.props;
+
+const headingsWithTitle = [
+  {
+    depth: 1,
+    text: title,
+    slug: "",
+  },
+  ...headings,
+];
+---
+
+<MobileCollapsible label="Table of contents">
+  <ul class="space-y-1 text-sm">
+    {
+      headingsWithTitle.map((heading) => (
+        <div class:list={[heading.depth === 2 && "pl-4", heading.depth === 3 && "pl-8"]}>
+          <Link
+            class={cn(
+              "font-sans flex items-center group",
+              "inline-flex items-center gap-1.5 px-3 py-1.5 bg-primary/5 border border-primary/20 rounded-lg text-sm text-foreground hover:bg-primary/10 hover:border-primary/40 transition-all",
+              "lg:p-0 lg:bg-transparent lg:border-0 lg:rounded-none lg:text-sm lg:text-muted-foreground lg:hover:bg-transparent lg:hover:border-0 lg:hover:text-primary transition-all"
+            )}
+            href={`#${heading.slug}`}
+            variant="muted"
+          >
+            <span class="order-1 lg:order-2 lg:text-muted-foreground group-hover:text-primary text-foreground">
+              {heading.text}
+            </span>
+          </Link>
+        </div>
+      ))
+    }
+  </ul>
+</MobileCollapsible>

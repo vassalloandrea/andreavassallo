@@ -1,0 +1,104 @@
+---
+import Link from "@components/ui/Link.astro";
+import type { EntryLink as LinkType } from "src/lib/zendo/content";
+import { buildContentEntryUrl } from "src/lib/zendo/plugins/remarkWikiLink.mjs";
+import MobileCollapsible from "@components/ui/MobileCollapsible.astro";
+import { getEntries, type ZendoCollectionId } from "src/lib/zendo/content";
+import { Icon } from "astro-icon/components";
+import { cn } from "src/lib/utils";
+
+interface Props {
+  outboundLinks: LinkType[];
+  inboundLinks: LinkType[];
+}
+
+const { outboundLinks, inboundLinks } = Astro.props;
+
+const deduplicateLinks = (links: LinkType[]): LinkType[] => {
+  const seen = new Set<string>();
+  return links.filter((link) => {
+    const key = `${link.type}-${link.slug}`;
+    if (seen.has(key)) return false;
+    seen.add(key);
+    return true;
+  });
+};
+
+const uniqueOutboundLinks = deduplicateLinks(outboundLinks);
+const uniqueInboundLinks = deduplicateLinks(inboundLinks);
+
+const getLinkTitle = async (link: LinkType): Promise<string> => {
+  const entries = await getEntries([link.type as ZendoCollectionId]);
+  return entries.find((e) => e.id === link.slug)?.data.title || link.slug;
+};
+---
+
+<MobileCollapsible label="Links to">
+  {
+    uniqueOutboundLinks.length > 0 ? (
+      <ul class="space-y-1 text-sm">
+        {uniqueOutboundLinks.map((link: LinkType) => (
+          <li>
+            <Link
+              class={cn(
+                "font-sans flex items-center group",
+                "inline-flex items-center gap-1.5 px-3 py-1.5 bg-primary/5 border border-primary/20 rounded-lg text-sm text-foreground hover:bg-primary/10 hover:border-primary/40 transition-all",
+                "lg:p-0 lg:bg-transparent lg:border-0 lg:rounded-none lg:text-sm lg:text-muted-foreground lg:hover:bg-transparent lg:hover:border-0 lg:hover:text-primary transition-all"
+              )}
+              href={buildContentEntryUrl({
+                type: link.type,
+                slug: link.slug,
+              })}
+              variant="primary"
+            >
+              <Icon
+                name="lucide:arrow-up-right"
+                class="h-3 w-3 inline-block mx-1 lg:text-muted-foreground group-hover:text-primary text-primary transition-colors order-2 lg:order-1"
+              />
+              <span class="order-1 lg:order-2 lg:text-muted-foreground group-hover:text-primary text-foreground">
+                {getLinkTitle(link)}
+              </span>
+            </Link>
+          </li>
+        ))}
+      </ul>
+    ) : (
+      <div class="font-sans text-sm text-muted-foreground">Nothing yet!</div>
+    )
+  }
+</MobileCollapsible>
+
+<MobileCollapsible label="Linked from">
+  {
+    uniqueInboundLinks.length > 0 ? (
+      <ul class="space-y-1 text-sm">
+        {uniqueInboundLinks.map((link: LinkType) => (
+          <li>
+            <Link
+              class={cn(
+                "font-sans flex items-center group",
+                "inline-flex items-center gap-1.5 px-3 py-1.5 bg-primary/5 border border-primary/20 rounded-lg text-sm text-foreground hover:bg-primary/10 hover:border-primary/40 transition-all",
+                "lg:p-0 lg:bg-transparent lg:border-0 lg:rounded-none lg:text-sm lg:text-muted-foreground lg:hover:bg-transparent lg:hover:border-0 lg:hover:text-primary transition-all"
+              )}
+              href={buildContentEntryUrl({
+                type: link.type,
+                slug: link.slug,
+              })}
+              variant="primary"
+            >
+              <Icon
+                name="lucide:arrow-down-left"
+                class="h-3 w-3 inline-block mx-1 lg:text-muted-foreground group-hover:text-primary text-primary transition-colors order-2 lg:order-1"
+              />
+              <span class="order-1 lg:order-2 lg:text-muted-foreground group-hover:text-primary text-foreground">
+                {getLinkTitle(link)}
+              </span>
+            </Link>
+          </li>
+        ))}
+      </ul>
+    ) : (
+      <div class="font-sans text-sm text-muted-foreground">Nothing yet!</div>
+    )
+  }
+</MobileCollapsible>

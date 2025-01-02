@@ -1,0 +1,47 @@
+---
+import { render } from "astro:content";
+
+import Pill from "@components/ui/Pill.astro";
+import Icon from "node_modules/astro-icon/components/Icon.astro";
+
+import type { CollectionEntry } from "astro:content";
+import { formatDate } from "src/lib/utils/date";
+
+export interface Props {
+  content: CollectionEntry<"writings">;
+  meta: "publishedOn" | "readingTime" | "topics";
+}
+
+const { content, meta } = Astro.props;
+const { remarkPluginFrontmatter } = await render(content);
+const publishedDate = formatDate(remarkPluginFrontmatter.publishedOn);
+---
+
+{
+  meta === "publishedOn" && (
+    <span class="flex items-center gap-1 text-chart-1">
+      <Icon name="lucide:calendar" class="h-3 w-3" />
+      <span class="mt-0.5 capitalize">{publishedDate}</span>
+    </span>
+  )
+}
+
+{
+  meta === "readingTime" && (
+    <span class="flex items-center gap-1">
+      <Icon name="lucide:clock" class="h-3 w-3" />
+      {content.data.readingTime}
+      {content.data.readingTime != 1 ? "mins" : "min"} read
+    </span>
+  )
+}
+
+{
+  meta === "topics" && content.data.topics && content.data.topics.length > 0 && (
+    <div class="flex flex-wrap gap-2 pt-2">
+      {content.data.topics?.map((topic) => (
+        <Pill class="px-2.5 py-1 text-xs capitalize text-muted-foreground">{topic.id}</Pill>
+      ))}
+    </div>
+  )
+}

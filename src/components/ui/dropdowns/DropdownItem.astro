@@ -1,0 +1,14 @@
+---
+import Link from "src/components/ui/Link.astro";
+
+interface Props {
+  href: string;
+  active?: boolean;
+}
+
+const { href, active = false } = Astro.props;
+---
+
+<Link href={href} variant="secondary" active={active} class="block px-4 py-2 text-xs">
+  <slot />
+</Link>

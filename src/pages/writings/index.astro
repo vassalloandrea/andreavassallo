@@ -1,0 +1,29 @@
+---
+import Hero from "@components/ui/Hero.astro";
+import Layout from "@layouts/Layout.astro";
+import sections from "src/data/sections.json";
+import SearchableContent from "@components/content/grid/SearchableContent.astro";
+import { topicFilter } from "src/lib/filters";
+
+const longTitleSplit = sections.writings.longTitle.split("-");
+---
+
+<Layout>
+  <title slot="head">Writings | Andrea Vassallo</title>
+
+  <Hero>
+    <span slot="antiheading">{sections.writings.title}</span>
+    <span slot="heading">{longTitleSplit[0]}<br /><span class="text-primary">{longTitleSplit[1]}</span></span>
+    <span slot="subheading">
+      {sections.writings.longDescription}
+    </span>
+  </Hero>
+
+  <SearchableContent
+    class="my-10"
+    searchParams={{ collections: ["writings"] }}
+    itemSize="L"
+    filters={await Promise.all([topicFilter()])}
+    gridType="masonry"
+  />
+</Layout>

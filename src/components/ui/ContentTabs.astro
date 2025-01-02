@@ -1,0 +1,68 @@
+---
+import Button from "./Button.astro";
+
+export interface Section {
+  title: string;
+  homepage: boolean;
+  description: string;
+}
+
+interface Props {
+  sections: Record<string, Section>;
+  tabToShow?: number;
+}
+
+const { sections, tabToShow = 0 } = Astro.props;
+
+const tabs = Object.entries(sections).filter(([, section]) => section.homepage);
+---
+
+<section id="work" class="py-16 scroll-mt-20">
+  <div class="w-full" data-controller="content-tabs">
+    <!-- Tabs List -->
+    <div class="w-full max-w-lg mx-auto mb-12 bg-secondary/50 p-1 rounded-full flex gap-1" role="tablist">
+      {
+        tabs.map(([key, section], index) => {
+          const isActive = index === tabToShow;
+
+          return (
+            <Button
+              role="tab"
+              aria-selected={isActive ? "true" : "false"}
+              aria-controls={`${key}-panel`}
+              data-content-tabs-target="trigger"
+              data-content-tabs-tab-param={key}
+              data-action="click->content-tabs#switch"
+              variant="ghost"
+              class="flex-1 rounded-full data-[state=active]:bg-primary data-[state=active]:text-primary-foreground data-[state=inactive]:text-muted-foreground hover:bg-muted/50"
+              data-state={isActive ? "active" : "inactive"}
+            >
+              {section.title}
+            </Button>
+          );
+        })
+      }
+    </div>
+
+    {
+      tabs.map(([key], index) => {
+        const isActive = index === tabToShow;
+
+        return (
+          <div
+            id={`${key}-panel`}
+            role="tabpanel"
+            data-content-tabs-target="content"
+            data-content-tabs-key={key}
+            class:list={["mt-0 animate-in fade-in-0 duration-500", !isActive && "hidden"]}
+          >
+            {key === "waypoints" && <slot name="waypoints-section" />}
+            {key === "books" && <slot name="books-section" />}
+            {key === "hikes" && <slot name="hikes-section" />}
+            {key === "writings" && <slot name="writings-section" />}
+          </div>
+        );
+      })
+    }
+  </div>
+</section>

@@ -1,0 +1,77 @@
+---
+import { Icon } from "astro-icon/components";
+import { Image } from "astro:assets";
+
+import HikeMeta from "./HikeMeta.astro";
+import CardContent from "@components/ui/card/CardContent.astro";
+import CardHeader from "@components/ui/card/CardHeader.astro";
+import LinkedCard from "@components/ui/LinkedCard.astro";
+import CardTitle from "@components/ui/card/CardTitle.astro";
+
+import type { CollectionEntry } from "astro:content";
+import type { ImageMetadata } from "astro";
+
+async function fetchMapFile(hike: CollectionEntry<"hikes">) {
+  const images = import.meta.glob<{ default: ImageMetadata }>("/src/content/assets/maps/*.svg");
+
+  const map = images[`/src/content/assets/maps/${hike.id.toLowerCase()}.svg`];
+
+  if (!map) {
+    throw new Error(`Cannot find map file for ${hike.id}`);
+  }
+
+  return await map();
+}
+
+interface Props {
+  hike: CollectionEntry<"hikes">;
+}
+
+const { hike } = Astro.props;
+const mapUrl = await fetchMapFile(hike);
+---
+
+<LinkedCard href={`/hikes/${hike.id}`} linkClass="h-full" class="h-full">
+  <CardHeader class="pb-2">
+    <div class="flex items-center justify-between gap-2 mb-2">
+      <div class="flex items-center gap-1.5 text-xs text-primary">
+        <HikeMeta content={hike} meta="difficulty" />
+        <HikeMeta content={hike} meta="slept" />
+        <HikeMeta content={hike} meta="ferrata" />
+        <HikeMeta content={hike} meta="mountaineering" />
+      </div>
+      <div class="flex items-center gap-1 text-xs text-muted-foreground">
+        <HikeMeta content={hike} meta="feedback" />
+      </div>
+    </div>
+    <CardTitle class="font-serif text-lg text-foreground group-hover:text-primary transition-colors duration-300">
+      <div class="flex justify-between gap-x-3">
+        <h3>{hike.data.title}</h3>
+        <div class="flex items-center gap-1 text-xs text-primary/80">
+          <Icon name="lucide:map-pin" class="w-3 h-3" /><span class="mt-0.4 mr-1">{hike.data.region}</span>
+        </div>
+      </div>
+    </CardTitle>
+  </CardHeader>
+  <CardContent class="space-y-3">
+    <div class="space-y-4 animate-in fade-in duration-500">
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-x-4 gap-y-2 text-xs">
+        <HikeMeta content={hike} meta="gain" />
+        <HikeMeta content={hike} meta="totalTime" />
+        <HikeMeta content={hike} meta="distance" />
+        <HikeMeta content={hike} meta="type" />
+      </div>
+      <div class="rounded-md overflow-hidden bg-muted relative aspect-3/2 border border-border">
+        <Image
+          src={mapUrl.default}
+          alt="Trail map"
+          class="w-full h-full object-contain"
+          loading="lazy"
+          decoding="async"
+          width={mapUrl.default.width}
+          height={mapUrl.default.height}
+        />
+      </div>
+    </div>
+  </CardContent>
+</LinkedCard>

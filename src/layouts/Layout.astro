@@ -1,0 +1,90 @@
+---
+import "@styles/global.css";
+
+import { Font } from "astro:assets";
+
+import Navbar from "@components/ui/navbar/Navbar.astro";
+import Footer from "@components/ui/Footer.astro";
+import CommandPalette from "@components/ui/command-palette/CommandPalette.astro";
+import BackToTop from "@components/ui/BackToTop.astro";
+import Background from "@components/ui/Background.astro";
+import AntiFooter from "@components/ui/AntiFooter.astro";
+import ElevationWidget from "@components/ui/ElevationWidget.astro";
+import Analytics from "@components/Analytics.astro";
+
+import localMountains from "../data/mountains.png";
+import { cn } from "src/lib/utils";
+
+const { elevation, latestHike, peakSleeps } = Astro.locals.globalState;
+const { class: className } = Astro.props;
+
+Astro.response.headers.set("Cache-Control", "public, max-age=0, s-maxage=3600, stale-while-revalidate=31536000");
+
+const canonicalURL = new URL(Astro.url.pathname, "https://andreavassallo.it");
+---
+
+<!doctype html>
+<html lang="en" class="text-[18px]">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+
+    <link rel="canonical" href={canonicalURL.href} />
+    <link rel="icon" type="image/svg+xml" href="/favicon.ico" />
+    <link rel="sitemap" href="/sitemap.xml" />
+
+    <meta name="generator" content={Astro.generator} />
+
+    <Font cssVariable="--font-sans" preload />
+    <Font cssVariable="--font-serif" preload />
+    <Font cssVariable="--font-mono" preload />
+
+    <Analytics measurementId="G-K7F59Y4540" />
+
+    <script is:inline>
+      const theme = (() => {
+        if (typeof localStorage !== "undefined" && localStorage.getItem("theme")) {
+          return localStorage.getItem("theme");
+        }
+
+        return "light";
+      })();
+
+      if (theme === "dark") {
+        document.documentElement.classList.add("dark");
+      } else {
+        document.documentElement.classList.remove("dark");
+      }
+
+      window.localStorage.setItem("theme", theme);
+    </script>
+
+    <slot name="head" />
+  </head>
+
+  <body class="bg-background text-muted-foreground transition-colors duration-300 antialiased">
+    <Navbar />
+    <Background image={localMountains} imageClass="bg-contain" />
+    <Background image={localMountains} reverse />
+
+    <main class={cn("container pt-24 sm:pt-28 min-h-[calc(100vh-460px)]", className)}>
+      <slot />
+    </main>
+
+    <AntiFooter />
+
+    <Footer />
+    <CommandPalette />
+    <BackToTop />
+    <ElevationWidget elevation={elevation} latestHike={latestHike} peakSleeps={peakSleeps} />
+
+    <script>
+      import { initScrollAnimations } from "src/lib/animations";
+
+      document.addEventListener("astro:page-load", initScrollAnimations);
+      initScrollAnimations();
+    </script>
+  </body>
+</html>
+
+<script src="../controllers/index.ts"></script>

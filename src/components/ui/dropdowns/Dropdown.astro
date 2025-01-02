@@ -1,0 +1,45 @@
+---
+import ChevronDownIcon from "@components/ui/icons/ChevronDownIcon.astro";
+import Link from "@components/ui/Link.astro";
+
+interface Props {
+  label: string;
+  href?: string;
+  active?: boolean;
+}
+
+const { label, href = "#", active = false } = Astro.props;
+---
+
+<div
+  data-controller="dropdown"
+  data-action="mouseenter->dropdown#open mouseleave->dropdown#close"
+  class="relative inline-block text-left"
+>
+  <div class="flex items-center gap-1">
+    <Link href={href} variant="secondary" active={active} class="text-sm">
+      {label}
+    </Link>
+    <button
+      type="button"
+      data-dropdown-target="button"
+      data-action="click->dropdown#toggle"
+      class:list={[
+        "dropdown-button inline-flex cursor-pointer p-1 transition-transform duration-300 ease-in-out hover:scale-125 active:scale-95",
+      ]}
+      aria-label="Toggle dropdown menu"
+      aria-expanded="false"
+    >
+      <ChevronDownIcon />
+    </button>
+  </div>
+
+  <div
+    data-dropdown-target="menu"
+    class="dropdown-menu absolute right-0 z-10 min-w-32 origin-top-right rounded-md bg-zinc-50 dark:bg-stone-800 shadow-md ring-1 ring-black/5 dark:ring-white/10 hidden opacity-0 scale-95 transition-all ease-out duration-100"
+  >
+    <div class="py-1">
+      <slot />
+    </div>
+  </div>
+</div>

@@ -1,0 +1,77 @@
+---
+import Hero from "@components/ui/Hero.astro";
+import Layout from "@layouts/Layout.astro";
+import sections from "src/data/sections.json";
+import { topicFilter } from "src/lib/filters";
+import SearchableContent from "@components/content/grid/SearchableContent.astro";
+import StatCard from "@components/ui/StatCard.astro";
+import { Icon } from "astro-icon/components";
+
+const { books: booksObject } = Astro.locals.globalState;
+const books = Object.entries(booksObject).map(([key, value]) => {
+  let icon = "lucide:file";
+  let label = key;
+
+  switch (key) {
+    case "total":
+      icon = "lucide:library";
+      label = "Total books";
+      break;
+    case "completed":
+      icon = "lucide:check";
+      label = "Completed";
+      break;
+    case "reading":
+      icon = "lucide:book-open";
+      label = "Reading";
+      break;
+    case "highlights":
+      icon = "lucide:highlighter";
+      label = "Highlights";
+      break;
+  }
+
+  return {
+    name: key,
+    value: value as number,
+    icon,
+    label,
+  };
+});
+
+const longTitleSplit = sections.books.longTitle.split("-");
+---
+
+<Layout>
+  <title slot="head">Books | Andrea Vassallo</title>
+
+  <Hero>
+    <span slot="antiheading">{sections.books.title}</span>
+    <span slot="heading">{longTitleSplit[0]}<br /><span class="text-primary">{longTitleSplit[1]}</span></span>
+    <span slot="subheading">
+      {sections.books.longDescription}
+    </span>
+    <span slot="stats">
+      <div class="mt-12 grid grid-cols-2 md:grid-cols-4 gap-4">
+        {
+          books.map((stat) => (
+            <StatCard stat={stat.value} label={stat.label}>
+              <span slot="icon">
+                <Icon name={stat.icon} class="lucide lucide-file-text h-4 w-4 text-primary" />
+              </span>
+            </StatCard>
+          ))
+        }
+      </div>
+    </span>
+  </Hero>
+
+  <SearchableContent
+    class="my-10"
+    searchParams={{ collections: ["books"] }}
+    itemSize="M"
+    gridType="grid"
+    filters={await Promise.all([topicFilter()])}
+  />
+</Layout>
+

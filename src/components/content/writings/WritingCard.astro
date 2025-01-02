@@ -1,0 +1,41 @@
+---
+import { getHtmlText, renderToString } from "src/lib/rendering";
+
+import WritingMeta from "./WritingMeta.astro";
+import WritingCover from "./WritingCover.astro";
+
+import CardContent from "@components/ui/card/CardContent.astro";
+import CardHeader from "@components/ui/card/CardHeader.astro";
+import LinkedCard from "@components/ui/LinkedCard.astro";
+import CardTitle from "@components/ui/card/CardTitle.astro";
+
+import type { CollectionEntry } from "astro:content";
+
+interface Props {
+  writing: CollectionEntry<"writings">;
+}
+
+const { writing } = Astro.props;
+const renderedWriting = await renderToString(writing);
+const cardId = `writing-card-${writing.id}`;
+const writingLink = writing.data.linked ? writing.data.url ?? '/' : `/writings/${writing.id}`;
+---
+
+<LinkedCard href={writingLink} linkClass="h-full" class="h-full" id={cardId}>
+  <CardHeader class="pb-2">
+    <div class="flex items-center justify-between text-xs text-muted-foreground mb-3">
+      <WritingMeta content={writing} meta="publishedOn" />
+      <WritingMeta content={writing} meta="readingTime" />
+    </div>
+    <CardTitle class="font-serif text-lg text-foreground group-hover:text-primary transition-colors duration-300">
+      <h3>{writing.data.title}</h3>
+    </CardTitle>
+  </CardHeader>
+  <CardContent class="space-y-3">
+    <p class="text-sm text-muted-foreground leading-relaxed">
+      <Fragment set:html={getHtmlText(renderedWriting)} />
+    </p>
+    <WritingCover writing={writing} />
+    <WritingMeta content={writing} meta="topics" />
+  </CardContent>
+</LinkedCard>

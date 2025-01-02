@@ -1,0 +1,30 @@
+{
+  "waypoints": {
+    "title": "Waypoints",
+    "longTitle": "Charting ideas,-navigating thoughts",
+    "description": "Curated discoveries and reference points captured along the path of inquiry.",
+    "longDescription": "A digital atlas where ideas are mapped, explored and connected. Some waypoints are newly discovered, others have become landmarks.",
+    "homepage": true
+  },
+  "books": {
+    "title": "Books",
+    "longTitle": "Pages browsed,-ideas gathered",
+    "description": "Books I am reading or have read, along with my highlights and notes.",
+    "longDescription": "The books that have shaped, inspired and accompanied me. A collection of technical, narrative and personal growth readings.",
+    "homepage": true
+  },
+  "writings": {
+    "title": "Writings",
+    "longTitle": "Written thoughts,-shared experiences",
+    "description": "A portfolio of long-form essays, thoughts, and articles I have written.",
+    "longDescription": "Articles and reflections on engineering, design systems, technical leadership and the lessons learned along the way.",
+    "homepage": true
+  },
+  "hikes": {
+    "title": "Hikes",
+    "longTitle": "Trails walked,-stories collected",
+    "description": "Physical expeditions and real-world traversals, documented one step at a time.",
+    "longDescription": "Every hike leaves a mark. Here you'll find my favorite routes through the Lepini Mountains, Circeo National Park and the mountains I call home.",
+    "homepage": true
+  }
+}

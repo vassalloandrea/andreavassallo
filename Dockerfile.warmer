@@ -1,0 +1,3 @@
+FROM alpine:latest
+
+COPY ./bin/warmer.sh /warmer.sh

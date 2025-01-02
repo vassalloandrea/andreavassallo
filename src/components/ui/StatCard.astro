@@ -1,0 +1,17 @@
+---
+interface Props {
+  stat: number
+  label: string
+}
+
+const { stat, label } = Astro.props;
+---
+
+<div
+  class="z-5 bg-card border border-border/50 rounded-xl p-4 group hover:border-primary/30 transition-colors duration-300"
+>
+  <div class="flex items-center gap-2 mb-2">
+    <slot name="icon" />
+    <span class="text-xs text-muted-foreground">{label}</span>
+  </div><p class="font-serif text-2xl text-foreground">{stat}</p>
+</div>

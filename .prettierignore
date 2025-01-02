@@ -1,0 +1,14 @@
+src/components/content/topics/TopicList.astro 
+
+# Ignore all Markdown files
+**/*.md
+**/*.mdx
+
+# Ignore package-lock.json
+package-lock.json
+
+# Ignore generated data file
+src/data/index.json 
+
+# Ignore sources
+.garden-source/*

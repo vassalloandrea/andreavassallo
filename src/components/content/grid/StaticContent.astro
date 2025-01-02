@@ -1,0 +1,48 @@
+---
+import { getResults, search } from "src/lib/zendo/actions/search";
+import ContentGrid from "./ContentGrid.astro";
+
+import BentoGrid from "./BentoGrid.astro";
+import { getEntry } from "src/lib/zendo/content";
+
+import type { HTMLAttributes } from "astro/types";
+import { cn } from "src/lib/utils";
+
+
+interface Props extends HTMLAttributes<"div"> {
+  searchParams: Parameters<typeof search>[0];
+  gridType?: "grid" | "masonry" | "bento";
+  itemSize?: "S" | "M" | "L" | "XL";
+}
+
+const { searchParams, gridType = "grid", itemSize = "M", class: className, ...props } = Astro.props;
+const { limit, ...filterParams } = searchParams;
+
+const initialItems = await getResults(filterParams, { limit });
+
+const initialItemsWithContent = await Promise.all(
+  initialItems.map(async (item) => {
+    return await getEntry(item.type, item.id);
+  })
+);
+
+type _EntryOrNull = typeof initialItemsWithContent[number];
+const initialItemsFiltered = initialItemsWithContent.filter(
+  (content): content is NonNullable<_EntryOrNull> => content !== null && content !== undefined
+);
+---
+
+<div class={cn("space-y-4", className)} {...props}>
+  {gridType === "bento" && <BentoGrid items={initialItemsFiltered} data-content-grid-target="grid" />}
+
+  {
+    gridType !== "bento" && (
+      <ContentGrid
+        items={initialItemsFiltered}
+        itemSize={itemSize}
+        layoutType={gridType}
+        data-content-grid-target="grid"
+      />
+    )
+  }
+</div>

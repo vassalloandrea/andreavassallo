@@ -1,0 +1,24 @@
+---
+import LinkedCard from "@components/ui/LinkedCard.astro";
+import TopicMeta from "@components/content/topics/TopicMeta.astro";
+import type { CollectionEntry } from "astro:content";
+import { getHtmlText, renderToString } from "src/lib/rendering";
+
+export interface Props {
+  topic: CollectionEntry<"topics">;
+}
+
+const { topic } = Astro.props;
+
+const renderedTopic = await renderToString(topic);
+---
+
+<LinkedCard href={`/topics/${topic.id}`} data-slot="card">
+  <h3 slot="title">{topic.data.title}</h3>
+
+  <TopicMeta content={topic} compact />
+
+  <div class="mt-2 text-sm font-serif font-sm line-clamp-3">
+    <Fragment set:html={getHtmlText(renderedTopic)} />
+  </div>
+</LinkedCard>

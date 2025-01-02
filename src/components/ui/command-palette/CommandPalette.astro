@@ -1,0 +1,57 @@
+---
+import Icon from "node_modules/astro-icon/components/Icon.astro";
+---
+
+<div data-controller="command-palette" data-command-palette-target="palette" class="relative z-50 hidden font-sans">
+  <template data-command-palette-target="groupTemplate">
+    <div class="px-4 pt-2 pb-1 text-xs font-semibold text-muted-foreground uppercase"></div>
+  </template>
+
+  <template data-command-palette-target="itemTemplate">
+    <a class="block cursor-pointer px-4 py-2 select-none">
+      <div class="flex justify-between items-center">
+        <span></span>
+        <div class="hidden sm:flex items-center gap-2">
+          <span class="status-badge"></span>
+          <span class="date-text"></span>
+        </div>
+      </div>
+    </a>
+  </template>
+
+  <div
+    data-command-palette-target="backdrop"
+    class="fixed inset-0 bg-background/80 backdrop-blur-sm transition-opacity duration-300 ease-in-out backdrop-click"
+  >
+  </div>
+
+  <div class="fixed inset-0 z-10 w-screen overflow-y-auto p-4 sm:p-6 md:p-20">
+    <div
+      data-command-palette-target="dialog"
+      class="mx-auto max-w-xl transform divide-y divide-border overflow-hidden rounded-xl bg-popover text-popover-foreground border border-border shadow-2xl transition-all duration-300 ease-in-out scale-95 opacity-0"
+    >
+      <div class="grid grid-cols-1">
+        <input
+          data-command-palette-target="search"
+          type="text"
+          class="col-start-1 row-start-1 h-12 w-full pr-4 pl-11 md:text-base bg-transparent text-foreground outline-none placeholder:text-muted-foreground text-sm"
+          placeholder="Search writings, waypoints, and more..."
+          autocomplete="off"
+        />
+        <Icon
+          name="lucide:search"
+          class="col-start-1 row-start-1 ml-4 w-4 h-4 self-center text-muted-foreground pointer-events-none"
+        />
+      </div>
+
+      <div
+        data-command-palette-target="results"
+        class="max-h-72 scroll-py-2 overflow-y-auto py-2 text-sm text-foreground hidden"
+      >
+      </div>
+      <div data-command-palette-target="noResults" class="p-4 text-sm text-muted-foreground hidden">
+        No results found.
+      </div>
+    </div>
+  </div>
+</div>

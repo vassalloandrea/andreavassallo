@@ -1,0 +1,74 @@
+---
+import Hero from "@components/ui/Hero.astro";
+import Layout from "@layouts/Layout.astro";
+import sections from "src/data/sections.json";
+import SearchableContent from "@components/content/grid/SearchableContent.astro";
+import StatCard from "@components/ui/StatCard.astro";
+import { Icon } from "astro-icon/components";
+
+const { hikes: hikesObject } = Astro.locals.globalState;
+const hikes = Object.entries(hikesObject).map(([key, value]) => {
+  let icon = "lucide:file";
+  let label = key;
+
+  switch (key) {
+    case "total":
+      icon = "lucide:mountain";
+      label = "Total Hikes";
+      break;
+    case "distance":
+      icon = "lucide:footprints";
+      label = "Distance";
+      break;
+    case "elevation":
+      icon = "lucide:trending-up";
+      label = "Elevation Gain";
+      break;
+    case "time":
+      icon = "lucide:clock";
+      label = "Total Time";
+      break;
+  }
+
+  return {
+    name: key,
+    value: value as number,
+    icon,
+    label,
+  };
+});
+
+const longTitleSplit = sections.hikes.longTitle.split("-");
+---
+
+<Layout>
+  <title slot="head">Hikes | Andrea Vassallo</title>
+
+  <Hero>
+    <span slot="antiheading">{sections.hikes.title}</span>
+    <span slot="heading">{longTitleSplit[0]}<br /><span class="text-primary">{longTitleSplit[1]}</span></span>
+    <span slot="subheading">
+      {sections.hikes.longDescription}
+    </span>
+    <span slot="stats">
+      <div class="mt-12 grid grid-cols-2 md:grid-cols-4 gap-4">
+        {
+          hikes.map((stat) => (
+            <StatCard stat={stat.value} label={stat.label}>
+              <span slot="icon">
+                <Icon name={stat.icon} class="lucide lucide-file-text h-4 w-4 text-primary" />
+              </span>
+            </StatCard>
+          ))
+        }
+      </div>
+    </span>
+  </Hero>
+
+  <SearchableContent
+    class="my-10"
+    searchParams={{ collections: ["hikes"] }}
+    itemSize="L"
+    gridType="grid"
+  />
+</Layout>

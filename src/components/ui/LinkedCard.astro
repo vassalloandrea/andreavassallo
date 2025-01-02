@@ -1,0 +1,31 @@
+---
+import Card from "@components/ui/Card.astro";
+import { isInternalUrl } from "src/lib/utils/url";
+
+import { cn } from "src/lib/utils";
+
+import type { ComponentProps } from "astro/types";
+
+type Props = ComponentProps<typeof Card> & {
+  href: string;
+  linkClass?: string;
+  target?: string;
+};
+
+const { href, linkClass, ...props } = Astro.props;
+---
+
+<a
+  href={href}
+  class={cn(
+    "group block rounded overflow-hidden",
+    "transform transition-transform hover:scale-[1.025]",
+    linkClass
+  )}
+  target={isInternalUrl(href) ? "_self" : "_blank"}
+  data-slot="card"
+>
+  <Card {...props} class={cn(props.class)}>
+    <slot />
+  </Card>
+</a>

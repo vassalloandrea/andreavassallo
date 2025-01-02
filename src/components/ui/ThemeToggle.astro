@@ -1,0 +1,52 @@
+---
+import { Icon } from "astro-icon/components";
+import type { HTMLAttributes } from "astro/types";
+import Button from "@components/ui/Button.astro";
+
+export interface Props extends HTMLAttributes<"button"> {
+  device: "mobile" | "desktop";
+}
+
+const { device, ...props } = Astro.props;
+---
+
+<Button
+  variant="ghost"
+  id={`theme-toggle-${device}`}
+  class="relative h-9 w-9 rounded-full overflow-hidden text-foreground"
+  aria-label="Toggle Dark Mode"
+  {...props}
+>
+  <Icon
+    name="lucide:sun"
+    class="absolute transition-all duration-500 rotate-0 scale-100 opacity-100 dark:rotate-90 dark:scale-0 dark:opacity-0"
+  />
+  <Icon
+    name="lucide:moon"
+    class="absolute transition-all duration-500 -rotate-90 scale-0 opacity-0 dark:rotate-0 dark:scale-100 dark:opacity-100"
+  />
+</Button>
+
+<script define:vars={{ device }} is:inline>
+  const themeToggleBtn = document.getElementById(`theme-toggle-${device}`);
+
+  const handleToggleClick = () => {
+    const element = document.documentElement;
+    element.classList.toggle("dark");
+
+    const isDark = element.classList.contains("dark");
+    const newTheme = isDark ? "dark" : "light";
+
+    if (!localStorage.getItem("theme")) {
+      const isSystemDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+      localStorage.setItem("theme", isSystemDark ? "dark" : "light");
+    }
+    localStorage.setItem("theme", newTheme);
+
+    if (window.analytics) {
+      window.analytics.trackThemeToggle(newTheme);
+    }
+  };
+
+  themeToggleBtn?.addEventListener("click", handleToggleClick);
+</script>

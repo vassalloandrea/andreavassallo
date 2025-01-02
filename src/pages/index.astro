@@ -1,0 +1,98 @@
+---
+import Link from "@components/ui/Link.astro";
+import Layout from "@layouts/Layout.astro";
+import sections from "src/data/sections.json";
+import { Icon } from "astro-icon/components";
+import ContentTabs from "@components/ui/ContentTabs.astro";
+import Skills from "@components/ui/Skills.astro";
+import ContentTab from "@components/ui/content-tabs/ContentTab.astro";
+import StaticContent from "@components/content/grid/StaticContent.astro";
+
+const { elevation } = Astro.locals.globalState;
+
+const section = Astro.url.searchParams.get("section");
+const sectionNumber =
+  typeof section === "string" ? parseInt(section, 10) : typeof section === "number" ? section : undefined;
+
+const sectionIndex =
+  typeof sectionNumber === "number" && !Number.isNaN(sectionNumber) && sectionNumber >= 0 && sectionNumber < 4
+    ? sectionNumber
+    : null;
+
+const tabToShow = sectionIndex !== null ? sectionIndex : Math.floor(Math.random() * 4);
+---
+
+<Layout>
+  <title slot="head">Andrea Vassallo</title>
+
+  <section class="space-y-14">
+    <div class="space-y-6">
+      <h1
+        class="font-serif text-4xl md:text-5xl lg:text-6xl leading-tight text-balance text-foreground reveal-on-scroll"
+      >
+        Hi, I'm <span class="font-bold">Andrea</span>.
+        <br />
+        <span class="text-primary">I build digital structures.</span>
+      </h1>
+      <p class="text-lg md:text-xl text-muted-foreground leading-relaxed text-pretty reveal-on-scroll delay-100">
+        Software Engineer & Tech Lead at
+        <Link target="_blank" href="https://nebulab.com">Nebulab</Link>
+        <!-- , currently working on
+        <Link target="_blank" href="https://goodamerican.com">Good American</Link>. -->
+        <br />
+        Crafting solutions with precision and care.
+      </p>
+      <div class="flex flex-wrap items-center gap-6 text-sm text-muted-foreground reveal-on-scroll delay-200">
+        <div class="flex items-center gap-2">
+          <Icon name="lucide:map-pin" class="w-6 text-primary" /><span
+            ><a target="_blank" href="https://www.google.it/maps?q=41.54149017019486,12.959058265624265">Pontenuovo</a>,
+            Latina</span
+          >
+        </div><div class="flex items-center gap-2">
+          <Icon name="lucide:mountain" class="w-6 text-primary" /><span
+            >Currently at {Math.round(elevation)}m elevation</span
+          >
+        </div>
+      </div>
+      <div class="reveal-on-scroll delay-300">
+        <Skills />
+      </div>
+    </div>
+  </section>
+
+  <ContentTabs sections={sections} tabToShow={tabToShow}>
+    <div slot="waypoints-section">
+      <ContentTab section={sections.waypoints} href="/waypoints" />
+      <StaticContent
+        class="hidden 2xl:block"
+        searchParams={{ collections: ["waypoints"], limit: 7 }}
+        gridType="bento"
+      />
+      <StaticContent class="2xl:hidden" searchParams={{ collections: ["waypoints"], limit: 7 }} gridType="masonry" />
+      <Link href="/waypoints" class="text-sm italic flex items-center gap-1 mt-6" variant="tertiary">
+        View all waypoints <Icon name="lucide:arrow-right" class="w-4 h-4" />
+      </Link>
+    </div>
+    <div slot="books-section">
+      <ContentTab section={sections.books} href="/books" />
+      <StaticContent searchParams={{ collections: ["books"], limit: 3 }} gridType="grid" itemSize="M" />
+      <Link href="/books" class="text-sm italic flex items-center gap-1 mt-1" variant="tertiary">
+        View all books <Icon name="lucide:arrow-right" class="w-4 h-4" />
+      </Link>
+    </div>
+    <div slot="writings-section">
+      <ContentTab section={sections.writings} href="/writings" />
+      <StaticContent searchParams={{ collections: ["writings"], limit: 4 }} gridType="masonry" itemSize="L" />
+      <Link href="/writings" class="text-sm italic flex items-center gap-1 mt-3" variant="tertiary">
+        View all writings <Icon name="lucide:arrow-right" class="w-4 h-4" />
+      </Link>
+    </div>
+    <div slot="hikes-section">
+      <ContentTab section={sections.hikes} href="/hikes" />
+      <StaticContent searchParams={{ collections: ["hikes"], limit: 4 }} itemSize="L" gridType="grid" />
+      <Link href="/hikes" class="text-sm italic flex items-center gap-1 mt-3" variant="tertiary">
+        View all hikes <Icon name="lucide:arrow-right" class="w-4 h-4" />
+      </Link>
+    </div>
+  </ContentTabs>
+</Layout>

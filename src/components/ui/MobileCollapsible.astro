@@ -1,0 +1,29 @@
+---
+import { Icon } from "astro-icon/components";
+
+interface Props {
+  label: string;
+}
+
+const { label } = Astro.props;
+---
+
+<div>
+  <div class="lg:hidden">
+    <h4 class="text-xs font-medium text-muted-foreground uppercase tracking-wide mb-4 flex items-center gap-2">
+      <Icon name="lucide:link-2" class="h-4 w-4 text-primary" />
+      {label}
+    </h4>
+    <slot />
+  </div>
+
+  <div class="hidden lg:block">
+    <div class="relative z-20 bg-secondary rounded-xl p-5">
+      <h4 class="text-xs font-medium text-muted-foreground uppercase tracking-wide mb-4 flex items-center gap-2">
+        <Icon name="lucide:link-2" class="h-4 w-4 text-primary" />
+        {label}
+      </h4>
+      <slot />
+    </div>
+  </div>
+</div>

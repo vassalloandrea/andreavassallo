@@ -1,0 +1,78 @@
+---
+import { Icon } from "astro-icon/components";
+
+import Hero from "@components/ui/Hero.astro";
+import Layout from "@layouts/Layout.astro";
+import sections from "src/data/sections.json";
+import SearchableContent from "@components/content/grid/SearchableContent.astro";
+import StatCard from "@components/ui/StatCard.astro";
+
+import { statusFilter, topicFilter } from "src/lib/filters";
+
+const { waypoints: waypointsObject } = Astro.locals.globalState;
+const waypoints = Object.entries(waypointsObject).map(([key, value]) => {
+  let icon = "lucide:file";
+  let label = key;
+
+  switch (key) {
+    case "total":
+      icon = "lucide:notebook-pen";
+      label = "Total Waypoints";
+      break;
+    case "sketch":
+      icon = "lucide:pencil";
+      label = "Sketches";
+      break;
+    case "surveying":
+      icon = "lucide:compass";
+      label = "Surveying";
+      break;
+    case "charted":
+      icon = "lucide:map-pinned";
+      label = "Charted";
+      break;
+  }
+
+  return {
+    name: key,
+    value: value as number,
+    icon,
+    label,
+  };
+});
+
+const longTitleSplit = sections.waypoints.longTitle.split("-");
+---
+
+<Layout>
+  <title slot="head">Waypoints | Andrea Vassallo</title>
+
+  <Hero>
+    <span slot="antiheading">{sections.waypoints.title}</span>
+    <span slot="heading">{longTitleSplit[0]}<br /><span class="text-primary">{longTitleSplit[1]}</span></span>
+    <span slot="subheading">
+      {sections.waypoints.longDescription}
+    </span>
+    <span slot="stats">
+      <div class="mt-12 grid grid-cols-2 md:grid-cols-4 gap-4">
+        {
+          waypoints.map((stat) => (
+            <StatCard stat={stat.value} label={stat.label}>
+              <span slot="icon">
+                <Icon name={stat.icon} class="lucide lucide-file-text h-4 w-4 text-primary" />
+              </span>
+            </StatCard>
+          ))
+        }
+      </div>
+    </span>
+  </Hero>
+
+  <SearchableContent
+    class="my-10"
+    searchParams={{ collections: ["waypoints"] }}
+    itemSize="M"
+    gridType="bento"
+    filters={await Promise.all([statusFilter(), topicFilter()])}
+  />
+</Layout>

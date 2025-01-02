@@ -1,0 +1,49 @@
+---
+interface Props {
+  class?: string;
+}
+
+const { class: className } = Astro.props;
+---
+
+<div class:list={["mb-10", className]}>
+  <slot name="navigation" />
+
+  <div class="mb-12 flex flex-col md:flex-row gap-8 items-start">
+    <div class="shrink-0">
+      <slot name="cover" />
+    </div>
+
+    <div class="flex-1 min-w-0">
+      <h1 class="font-serif text-3xl md:text-4xl lg:text-5xl text-foreground mb-3 text-balance">
+        <slot name="title" />
+      </h1>
+
+      <div class="flex flex-col justify-center-center gap-2 text-lg text-muted-foreground mb-4">
+        <slot name="meta" />
+      </div>
+
+      <div class="flex flex-wrap gap-2">
+        <slot name="tags" />
+      </div>
+    </div>
+  </div>
+
+  <div class="grid grid-cols-1 lg:grid-cols-[1fr_320px] gap-12">
+    <article class="min-w-0">
+      <div class="prose prose-lg dark:prose-invert max-w-none mb-12">
+        <slot />
+      </div>
+
+      <div class="mb-12">
+        <slot name="bottom" />
+      </div>
+    </article>
+
+    <aside class="hidden lg:block">
+      <div class="sticky top-24 space-y-6">
+        <slot name="sidebar" />
+      </div>
+    </aside>
+  </div>
+</div>

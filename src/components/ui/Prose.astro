@@ -1,0 +1,28 @@
+<div
+  class:list={[
+    "prose",
+    "prose-stone",
+    "prose-headings:font-sans prose-headings:mb-2 prose-headings:font-semibold",
+    "prose-li:first-letter:capitalize",
+    "[&_ol]:m-0",
+    "[&_ul]:m-0",
+    "[&_ul>ul>li]:my-1",
+    "[&_ol>li]:my-1",
+    "prose-a:no-underline",
+    "dark:prose-invert",
+    "text-muted-foreground",
+    "max-w-fit",
+    "wrap-break-word",
+  ]}
+>
+  <slot />
+</div>
+
+<style is:global>
+  .prose h1:first-child,
+  .prose h2:first-child,
+  .prose h3:first-child,
+  .prose h4:first-child {
+    margin-top: 0;
+  }
+</style>

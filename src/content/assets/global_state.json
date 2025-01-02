@@ -1,0 +1,29 @@
+{
+  "latestHike": {
+    "title": "Monte Terminilletto/Rinaldi Refuge",
+    "date": "2026-01-31T00:00:00.000Z",
+    "slug": "2026-01-31-monte-terminilletto"
+  },
+  "sleptNights": 10,
+  "hikes": {
+    "total": 17,
+    "distance": "243 km",
+    "elevation": "14.272 m",
+    "time": "39h 45m"
+  },
+  "books": {
+    "total": 5,
+    "completed": 2,
+    "reading": 3,
+    "highlights": 186
+  },
+  "writings": {
+    "total": 7
+  },
+  "waypoints": {
+    "total": 9,
+    "sketch": 8,
+    "surveying": 0,
+    "charted": 1
+  }
+}

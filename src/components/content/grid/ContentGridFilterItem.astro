@@ -1,0 +1,35 @@
+---
+import Pill from "@components/ui/Pill.astro";
+import { Icon } from "astro-icon/components";
+
+interface Props {
+  id: string;
+  label: string;
+  filterCategory: string;
+  icon?: string;
+  style?: "default" | "secondary" | "tertiary";
+  isAll?: boolean;
+}
+
+const { id, label, filterCategory, icon, style = "default", isAll = false } = Astro.props;
+---
+
+<label class="cursor-pointer">
+  <input
+    type="checkbox"
+    class="peer sr-only"
+    data-action="change->content-grid#updateFilter"
+    data-filter-category={filterCategory}
+    data-filter-type={id}
+    data-content-grid-target={isAll ? "allCheckbox" : "checkbox"}
+    checked={isAll}
+  />
+  <Pill
+    clickable={true}
+    variant={style}
+    class="flex gap-x-2 capitalize peer-checked:bg-primary peer-checked:hover:bg-primary/80 transition-all duration-200 peer-checked:hover:text-white peer-checked:text-white"
+  >
+    {icon && <Icon name={icon} class="w-4 h-4 mr-1" />}
+    {isAll ? `${label}` : label}
+  </Pill>
+</label>

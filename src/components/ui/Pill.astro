@@ -1,0 +1,33 @@
+---
+import { cn } from "src/lib/utils";
+
+interface Props {
+  variant?: "default" | "secondary" | "tertiary";
+  clickable?: boolean;
+  class?: string;
+  title?: string;
+}
+
+const { variant = "default", clickable = false, class: className, ...rest } = Astro.props;
+
+let classes = "px-4 py-2 text-sm bg-secondary text-secondary-foreground";
+
+if (variant === "default") {
+  if (clickable) {
+    classes += " hover:bg-primary hover:text-primary-foreground";
+  }
+} else if (variant === "secondary") {
+  classes = "px-2.5 py-1 text-xs bg-chart-2/20 text-chart-2";
+} else if (variant === "tertiary") {
+  classes =
+    "justify-center rounded-md border px-2 py-0.5 font-medium w-fit whitespace-nowrap shrink-0 [&>svg]:size-3 [&>svg]:pointer-events-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive transition-[color,box-shadow] overflow-hidden border-transparent bg-secondary text-secondary-foreground [a&]:hover:bg-secondary/90 text-xs flex items-center gap-1";
+}
+
+if (clickable) {
+  classes += " cursor-pointer";
+}
+---
+
+<span class={cn("rounded-full font-medium transition-colors duration-300", classes, className)} {...rest}>
+  <slot />
+</span>
