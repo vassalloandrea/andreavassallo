@@ -112,8 +112,6 @@ export default class ContentGridController extends Controller {
       const selectedFilters = this.filtersValue[category] || ["all"];
       const isAllSelected = selectedFilters.includes("all");
 
-      console.log(`Category: ${category}, Selected Filters: ${selectedFilters}, Is All Selected: ${isAllSelected}`);
-
       const allCheckbox = this.allCheckboxTargets.find((cb) => cb.dataset.filterCategory === category);
       if (allCheckbox) {
         allCheckbox.checked = isAllSelected;

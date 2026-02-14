@@ -136,14 +136,23 @@ class AnalyticsOrchestrator {
   }
 
   private send(event: GtagEvent, params?: BaseEventParams): void {
-    if (!this.isEnabled()) {
-      if (typeof window !== "undefined" && import.meta.env.MODE === "development") {
-        console.log(`[Analytics:dev] ${event}`, params ?? "");
-      }
+    if (import.meta.env.DEV) {
+      console.log(`[Analytics:dev] ${event}`, params ?? "");
       return;
     }
 
-    window.gtag("event", event, params);
+    // Use gtag if available, otherwise queue via dataLayer
+    // This handles the async timing issue where gtag script
+    // hasn't loaded yet but we still want to capture events
+    if (this.isEnabled()) {
+      window.gtag("event", event, params);
+    } else if (typeof window !== "undefined") {
+      window.dataLayer = window.dataLayer || [];
+      window.dataLayer.push({
+        event: event,
+        ...params,
+      });
+    }
   }
 
   // --- Lifecycle ---
