@@ -5,7 +5,10 @@ import path from "path";
 import { getElevation } from "./lib/utils/location";
 
 export const onRequest = defineMiddleware(async (context, next) => {
-  const currentElevation = (await getElevation("41.54149017019486", "12.959058265624265")) || 17;
+  let currentElevation = (await getElevation("41.54149017019486", "12.959058265624265")) || 17;
+
+  // Add random offset between -10m and +10m for privacy around home location
+  currentElevation += Math.floor(Math.random() * 21) - 10;
 
   let latestHike = "Monte Terminillo";
   let peakSleeps = 10;
