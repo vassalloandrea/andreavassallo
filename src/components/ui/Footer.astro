@@ -1,17 +1,24 @@
 ---
 import { Icon } from "astro-icon/components";
-
-const currentYear = new Date().getFullYear();
+import Link from "@components/ui/Link.astro";
 ---
 
-<footer class="py-12">
+<footer class="px-6 py-12 border-t border-border/50">
   <div class="container mx-auto">
-    <div class="flex flex-col md:flex-row items-center justify-between gap-4">
+    <div class="flex flex-col md:flex-row items-center justify-between gap-6">
       <div class="flex items-center gap-2">
         <Icon name="lucide:map-pinned" class="h-4 w-4 text-primary" />
-        <span class="text-sm text-muted-foreground">
-          {currentYear} © Andrea Vassallo
-        </span>
+        <span class="text-sm text-muted-foreground"> 2026 © Andrea Vassallo </span>
+      </div>
+
+      <div class="flex items-center gap-4">
+        <Link href="/privacy" class="text-sm text-muted-foreground hover:text-foreground transition-colors">
+          Privacy
+        </Link>
+        <span class="text-border">|</span>
+        <button id="open-cookie-settings" class="hover:text-foreground transition-colors cursor-pointer text-sm">
+          Cookie Settings
+        </button>
       </div>
 
       <p class="text-sm text-muted-foreground flex items-center gap-1">
@@ -20,3 +27,10 @@ const currentYear = new Date().getFullYear();
     </div>
   </div>
 </footer>
+
+<script>
+  const openSettings = document.getElementById("open-cookie-settings");
+  openSettings?.addEventListener("click", () => {
+    document.dispatchEvent(new Event("open-cookie-settings"));
+  });
+</script>
