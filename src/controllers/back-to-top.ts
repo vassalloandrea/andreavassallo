@@ -18,7 +18,7 @@ export default class BackToTopController extends Controller {
 
   scrollToTop(event: Event) {
     event.preventDefault();
-    analytics.trackEvent("back_to_top_click", {});
+    analytics.trackBackToTop();
     window.scrollTo({
       top: 0,
       behavior: "smooth",

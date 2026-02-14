@@ -14,7 +14,8 @@ export type GtagEvent =
   | "navbar_click"
   | "footer_link_click"
   | "scroll_depth"
-  | "time_on_page";
+  | "time_on_page"
+  | "newsletter_subscribe";
 
 export interface BaseEventParams {
   [key: string]: string | number | boolean | undefined;
@@ -66,6 +67,11 @@ export interface NavClickParams extends BaseEventParams {
 
 export interface FooterLinkParams extends BaseEventParams {
   link_url: string;
+}
+
+export interface NewsletterSubscribeParams extends BaseEventParams {
+  success: boolean;
+  page_path: string;
 }
 
 export interface ScrollDepthParams extends BaseEventParams {
@@ -219,6 +225,13 @@ class AnalyticsOrchestrator {
 
   public trackBackToTop(): void {
     this.send("back_to_top_click");
+  }
+
+  public trackNewsletterSubscribe(success: boolean): void {
+    this.send("newsletter_subscribe", {
+      success,
+      page_path: window.location.pathname,
+    });
   }
 
   // --- Internal Setup ---

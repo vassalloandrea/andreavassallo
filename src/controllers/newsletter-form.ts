@@ -1,5 +1,6 @@
 import { Controller } from "@hotwired/stimulus";
 import { actions } from "astro:actions";
+import { analytics } from "src/lib/analytics";
 
 export default class NewsletterFormController extends Controller {
   static override targets = ["input", "message", "button"];
@@ -18,9 +19,11 @@ export default class NewsletterFormController extends Controller {
     if (!error) {
       this.inputTarget.value = "";
       this.showMessage("Thanks for subscribing! Check your inbox.", false);
+      analytics.trackNewsletterSubscribe(true);
     } else {
       console.error(error);
       this.showMessage("Something went wrong. Please try again.", true);
+      analytics.trackNewsletterSubscribe(false);
     }
 
     this.enableForm();
