@@ -11,6 +11,7 @@ import Background from "@components/ui/Background.astro";
 import AntiFooter from "@components/ui/AntiFooter.astro";
 import ElevationWidget from "@components/ui/ElevationWidget.astro";
 import Analytics from "@components/Analytics.astro";
+import CookieConsent from "@components/ui/CookieConsent.astro";
 
 import localMountains from "../data/mountains.png";
 import { cn } from "src/lib/utils";
@@ -77,6 +78,7 @@ const canonicalURL = new URL(Astro.url.pathname, "https://andreavassallo.it");
     <CommandPalette />
     <BackToTop />
     <ElevationWidget elevation={elevation} latestHike={latestHike} peakSleeps={peakSleeps} />
+    <CookieConsent />
 
     <script>
       import { initScrollAnimations } from "src/lib/animations";
