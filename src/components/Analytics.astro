@@ -1,6 +1,6 @@
 ---
 const GA_ID = import.meta.env.PUBLIC_GA4_ID;
-const isProd = import.meta.env.PROD;
+const isProd = import.meta.env.MODE === "production";
 
 interface Props {
   measurementId?: string;

@@ -137,7 +137,7 @@ class AnalyticsOrchestrator {
 
   private send(event: GtagEvent, params?: BaseEventParams): void {
     if (!this.isEnabled()) {
-      if (typeof window !== "undefined" && import.meta.env.DEV) {
+      if (typeof window !== "undefined" && import.meta.env.MODE === "development") {
         console.log(`[Analytics:dev] ${event}`, params ?? "");
       }
       return;
