@@ -21,6 +21,7 @@ export const GET: APIRoute = async () => {
     `${site}/hikes/`,
     `${site}/waypoints/`,
     `${site}/writings/`,
+    `${site}/privacy/`,
 
     // Pagine dinamiche
     ...waypoints.map((w) => `${site}/waypoints/${w.id}/`),

@@ -1,0 +1,81 @@
+---
+import Layout from "../layouts/Layout.astro";
+import Prose from "../components/ui/Prose.astro";
+import Hero from "../components/ui/Hero.astro";
+
+const lastUpdated = new Date().toLocaleDateString("en-US", {
+  year: "numeric",
+  month: "long",
+  day: "numeric",
+});
+---
+
+<Layout>
+  <title slot="head">Privacy Policy | Andrea Vassallo</title>
+
+  <Hero>
+    <span slot="antiheading">Legal</span>
+    <span slot="heading">Privacy Policy</span>
+    <span slot="subheading">Last updated: {lastUpdated}</span>
+  </Hero>
+
+  <div class="my-10">
+    <Prose>
+      <h2>1. Introduction</h2>
+      <p>
+        This Privacy Policy describes how we handle your personal information. By using the site, you consent to the
+        data practices described in this policy.
+      </p>
+
+      <h2>2. Data Collection (Cookies)</h2>
+      <p>
+        We use <strong>Google Analytics 4 (GA4)</strong> to understand how visitors interact with our website to improve the
+        user experience.
+      </p>
+      <p>GA4 uses cookies to collect data such as:</p>
+      <ul>
+        <li>Your IP address (which is anonymized by default in GA4).</li>
+        <li>Browser type and device information.</li>
+        <li>Pages visited and time spent on the site.</li>
+      </ul>
+      <p>
+        By default, we have configured the analytics to <strong>NOT</strong> collect data until you explicitly give your consent
+        by clicking "Accept Analytics" on our cookie banner.
+      </p>
+
+      <h2>3. How We Use Your Data</h2>
+      <p>
+        The data collected is used solely for statistical analysis regarding the use of this website. We do not sell,
+        rent, or lease our customer lists to third parties.
+      </p>
+
+      <h2>4. Your Rights (GDPR)</h2>
+      <p>Under the General Data Protection Regulation (GDPR), you have the right to:</p>
+      <ul>
+        <li>Access your personal data.</li>
+        <li>Rectify inaccurate personal data.</li>
+        <li>Request erasure of your personal data ("Right to be forgotten").</li>
+        <li><strong>Withdraw consent</strong> at any time.</li>
+      </ul>
+
+      <h2>5. Managing Cookies</h2>
+      <p>
+        You can change your cookie preferences at any time by clicking the "Cookie Settings" link in the footer of this
+        website.
+      </p>
+      <p>
+        Alternatively, you can instruct your browser to refuse all cookies or to indicate when a cookie is being sent.
+        However, if you do not accept cookies, you may not be able to use some portions of our Service.
+      </p>
+
+      <h2>6. Changes to This Privacy Policy</h2>
+      <p>
+        We may update our Privacy Policy from time to time. We will notify you of any changes by posting the new Privacy
+        Policy on this page.
+      </p>
+
+      <h2>7. Contact Us</h2>
+      <p>If you have any questions about this Privacy Policy, please contact me.</p>
+    </Prose>
+  </div>
+</Layout>
