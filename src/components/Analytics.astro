@@ -12,22 +12,19 @@ const shouldLoad = isProd && measurementId;
 
 {shouldLoad && (
   <Fragment>
+    <link rel="preconnect" href="https://www.googletagmanager.com" />
+    <link rel="preconnect" href="https://www.google-analytics.com" />
+
     <script
       is:inline
-      async
-      src={`https://www.googletagmanager.com/gtag/js?id=${measurementId}`}
-    ></script>
-
-    <script is:inline define:vars={{ measurementId }}>
+      define:vars={{ measurementId }}
+    >
       window.dataLayer = window.dataLayer || [];
-      function gtag() {
-        // eslint-disable-next-line prefer-rest-params
-        dataLayer.push(arguments);
-      }
+      // eslint-disable-next-line prefer-rest-params
+      function gtag() { dataLayer.push(arguments); }
       window.gtag = gtag;
 
       gtag("js", new Date());
-
       gtag("consent", "default", {
         ad_storage: "denied",
         analytics_storage: "denied",
@@ -35,19 +32,30 @@ const shouldLoad = isProd && measurementId;
 
       const storedConsent = localStorage.getItem("analytics-consent");
       if (storedConsent === "granted") {
-        gtag("consent", "update", {
-          analytics_storage: "granted",
-        });
+        gtag("consent", "update", { analytics_storage: "granted" });
       }
 
-      gtag("config", measurementId, {
-        send_page_view: false,
+      gtag("config", measurementId, { send_page_view: false });
+
+      window.addEventListener("load", function() {
+        const s = document.createElement("script");
+        s.src = "https://www.googletagmanager.com/gtag/js?id=" + measurementId;
+        s.async = true;
+        document.head.appendChild(s);
       });
+      // eslint-enable no-var, prefer-rest-params
     </script>
   </Fragment>
 )}
 
 <script>
   import { analytics } from "../lib/analytics";
-  analytics.init();
+
+  const init = () => analytics.init();
+
+  if ("requestIdleCallback" in window) {
+    requestIdleCallback(init);
+  } else {
+    setTimeout(init, 200);
+  }
 </script>

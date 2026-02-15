@@ -39,8 +39,8 @@ const canonicalURL = new URL(Astro.url.pathname, "https://andreavassallo.it");
     {title && <title>{title}</title>}
 
     <Font cssVariable="--font-sans" preload />
-    <Font cssVariable="--font-serif" preload />
-    <Font cssVariable="--font-mono" preload />
+    <Font cssVariable="--font-serif"  />
+    <Font cssVariable="--font-mono" />
 
     <Analytics measurementId="G-K7F59Y4540" />
 
@@ -91,4 +91,11 @@ const canonicalURL = new URL(Astro.url.pathname, "https://andreavassallo.it");
   </body>
 </html>
 
-<script src="../controllers/index.ts"></script>
+<script>
+  if ("requestIdleCallback" in window) {
+    requestIdleCallback(() => import("../controllers/index.ts"));
+  } else {
+    setTimeout(() => import("../controllers/index.ts"), 300);
+  }
+</script>
+
