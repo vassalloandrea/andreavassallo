@@ -17,7 +17,7 @@ import localMountains from "../data/mountains.png";
 import { cn } from "src/lib/utils";
 
 const { elevation, latestHike, peakSleeps } = Astro.locals.globalState;
-const { class: className } = Astro.props;
+const { class: className, title, description = "Andrea Vassallo's digital garden called Atlas." } = Astro.props;
 
 Astro.response.headers.set("Cache-Control", "public, max-age=0, s-maxage=3600, stale-while-revalidate=31536000");
 
@@ -29,12 +29,14 @@ const canonicalURL = new URL(Astro.url.pathname, "https://andreavassallo.it");
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width" />
+    <meta name="description" content={description} />
 
     <link rel="canonical" href={canonicalURL.href} />
     <link rel="icon" type="image/svg+xml" href="/favicon.ico" />
     <link rel="sitemap" href="/sitemap.xml" />
 
     <meta name="generator" content={Astro.generator} />
+    {title && <title>{title}</title>}
 
     <Font cssVariable="--font-sans" preload />
     <Font cssVariable="--font-serif" preload />
