@@ -47,6 +47,16 @@ import { cn } from "src/lib/utils";
     // Check if element exists to avoid errors on pages without the banner
     if (!banner || !acceptBtn || !rejectBtn) return;
 
+    // If we're on the privacy page, make the banner background transparent
+    try {
+      if (window.location && window.location.pathname === "/privacy") {
+        banner.classList.remove("bg-background/80", "backdrop-blur-sm", "md:backdrop-blur-none");
+        banner.classList.add("bg-transparent");
+      }
+    } catch {
+      // ignore (e.g. non-browser environment)
+    }
+
     const STORAGE_KEY = "analytics-consent";
 
     // Helper to update Google Analytics consent
