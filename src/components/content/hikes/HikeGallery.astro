@@ -33,7 +33,7 @@ const imageSrcs = images.map((img) => img.src);
       data-gallery-images-value={JSON.stringify(imageSrcs)}
       data-gallery-index-value="0"
     >
-      <div class="relative aspect-square rounded-2xl overflow-hidden group bg-muted">
+      <div class="relative aspect-4/3 rounded-2xl overflow-hidden group bg-muted">
         {images[0] ? (
           <Image
             data-gallery-target="mainImage"
@@ -41,7 +41,7 @@ const imageSrcs = images.map((img) => img.src);
             alt={hike.data.title}
             loading="lazy"
             decoding="async"
-            quality={50}
+            quality={30}
             format="webp"
             width={800}
             class="w-full h-full object-cover cursor-pointer transition-transform duration-500 hover:scale-105"
@@ -60,7 +60,7 @@ const imageSrcs = images.map((img) => img.src);
         {images.length > 1 && (
           <>
             <button
-              class="absolute left-2 sm:left-4 top-1/2 -translate-y-1/2 w-8 h-8 sm:w-10 sm:h-10 bg-background/80 backdrop-blur-sm rounded-full flex items-center justify-center opacity-100 sm:opacity-0 group-hover:opacity-100 transition-opacity hover:bg-background text-foreground touch-manipulation"
+              class="absolute cursor-pointer left-2 sm:left-4 top-1/2 -translate-y-1/2 w-8 h-8 sm:w-10 sm:h-10 bg-background/80 backdrop-blur-sm rounded-full flex items-center justify-center opacity-100 sm:opacity-0 group-hover:opacity-100 transition-opacity hover:bg-background text-foreground touch-manipulation"
               aria-label="Previous image"
               data-action="click->gallery#prev"
             >
@@ -80,7 +80,7 @@ const imageSrcs = images.map((img) => img.src);
               </svg>
             </button>
             <button
-              class="absolute right-2 sm:right-4 top-1/2 -translate-y-1/2 w-8 h-8 sm:w-10 sm:h-10 bg-background/80 backdrop-blur-sm rounded-full flex items-center justify-center opacity-100 sm:opacity-0 group-hover:opacity-100 transition-opacity hover:bg-background text-foreground touch-manipulation"
+              class="absolute cursor-pointer right-2 sm:right-4 top-1/2 -translate-y-1/2 w-8 h-8 sm:w-10 sm:h-10 bg-background/80 backdrop-blur-sm rounded-full flex items-center justify-center opacity-100 sm:opacity-0 group-hover:opacity-100 transition-opacity hover:bg-background text-foreground touch-manipulation"
               aria-label="Next image"
               data-action="click->gallery#next"
             >
@@ -174,7 +174,7 @@ const imageSrcs = images.map((img) => img.src);
         {images.length > 1 && (
           <>
             <button
-              class="absolute left-2 sm:left-6 top-1/2 -translate-y-1/2 w-10 h-10 sm:w-12 sm:h-12 bg-secondary rounded-full flex items-center justify-center text-foreground hover:bg-secondary/80 touch-manipulation"
+              class="absolute cursor-pointer left-2 sm:left-6 top-1/2 -translate-y-1/2 w-10 h-10 sm:w-12 sm:h-12 bg-secondary rounded-full flex items-center justify-center text-foreground hover:bg-secondary/80 touch-manipulation"
               aria-label="Previous image"
               data-action="click->gallery#prev"
             >
@@ -194,7 +194,7 @@ const imageSrcs = images.map((img) => img.src);
               </svg>
             </button>
             <button
-              class="absolute right-2 sm:right-6 top-1/2 -translate-y-1/2 w-10 h-10 sm:w-12 sm:h-12 bg-secondary rounded-full flex items-center justify-center text-foreground hover:bg-secondary/80 touch-manipulation"
+              class="absolute cursor-pointer right-2 sm:right-6 top-1/2 -translate-y-1/2 w-10 h-10 sm:w-12 sm:h-12 bg-secondary rounded-full flex items-center justify-center text-foreground hover:bg-secondary/80 touch-manipulation"
               aria-label="Next image"
               data-action="click->gallery#next"
             >

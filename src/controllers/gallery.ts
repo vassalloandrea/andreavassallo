@@ -25,6 +25,19 @@ export default class GalleryController extends Controller<HTMLElement> {
   private touchEndX = 0;
   private readonly SWIPE_THRESHOLD = 50;
 
+  // Throttle to prevent rapid button clicks
+  private lastActionTime = 0;
+  private readonly ACTION_THROTTLE_MS = 500;
+
+  private canPerformAction(): boolean {
+    const now = Date.now();
+
+    if (now - this.lastActionTime < this.ACTION_THROTTLE_MS) return false;
+
+    this.lastActionTime = now;
+    return true;
+  }
+
   override connect(): void {
     window.addEventListener("keydown", this.handleKeydown);
     this.element.addEventListener("touchstart", this.handleTouchStart, { passive: true });
@@ -43,23 +56,33 @@ export default class GalleryController extends Controller<HTMLElement> {
 
   next(): void {
     if (this.imagesValue.length === 0) return;
+
+    if (!this.canPerformAction()) return;
+
     this.indexValue = (this.indexValue + 1) % this.imagesValue.length;
   }
 
   prev(): void {
     if (this.imagesValue.length === 0) return;
+
+    if (!this.canPerformAction()) return;
+
     this.indexValue = (this.indexValue - 1 + this.imagesValue.length) % this.imagesValue.length;
   }
 
   goTo(event: Event): void {
     const params = (event as CustomEvent & { params?: { index?: number } }).params;
     if (params && typeof params.index === "number") {
+      if (!this.canPerformAction()) return;
+
       this.indexValue = params.index;
     }
   }
 
   openFullscreen(): void {
     if (!this.hasModalTarget) return;
+
+    if (!this.canPerformAction()) return;
 
     this.modalTarget.classList.remove("hidden");
     this.modalTarget.classList.add("flex");
