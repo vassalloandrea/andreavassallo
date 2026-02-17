@@ -63,12 +63,7 @@ const tabToShow = sectionIndex !== null ? sectionIndex : Math.floor(Math.random(
   <ContentTabs sections={sections} tabToShow={tabToShow}>
     <div slot="waypoints-section">
       <ContentTab section={sections.waypoints} href="/waypoints" />
-      <StaticContent
-        class="hidden 2xl:block"
-        searchParams={{ collections: ["waypoints"], limit: 7 }}
-        gridType="bento"
-      />
-      <StaticContent class="2xl:hidden" searchParams={{ collections: ["waypoints"], limit: 7 }} gridType="masonry" />
+      <StaticContent searchParams={{ collections: ["waypoints"], limit: 7 }} gridType="bento" />
       <Link href="/waypoints" class="text-sm italic flex items-center gap-1 mt-6" variant="tertiary">
         View all waypoints <Icon name="lucide:arrow-right" class="w-4 h-4" />
       </Link>

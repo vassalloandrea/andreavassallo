@@ -93,14 +93,16 @@ export default class GardenLazyCardController extends Controller<HTMLElement> {
 
       if (paragraph) {
         if (this.element.dataset.contentCardDimensionValue === "2x2") {
-          paragraph.classList.add("line-clamp-12");
+          paragraph.classList.add("2xl:line-clamp-12");
         } else if (this.element.dataset.contentCardDimensionValue === "2x1") {
-          paragraph.classList.add("line-clamp-3");
+          paragraph.classList.add("2xl:line-clamp-3");
         } else if (this.element.dataset.contentCardDimensionValue === "1x2") {
-          paragraph.classList.add("line-clamp-12");
+          paragraph.classList.add("2xl:line-clamp-12");
         } else {
-          paragraph.classList.add("line-clamp-3");
+          paragraph.classList.add("2xl:line-clamp-3");
         }
+
+        paragraph.classList.add("line-clamp-4");
       }
 
       if (cardContent) {

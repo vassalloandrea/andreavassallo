@@ -15,22 +15,22 @@ const { items, class: className, ...props } = Astro.props;
   class:list={[
     // Base Grid Layout
     // grid-flow-dense is essential: it backfills empty "holes" left by larger items
-    "grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 auto-rows-[minmax(180px,auto)] gap-4 grid-flow-dense",
+    "grid grid-cols-1 sm:grid-cols-2 2xl:grid-cols-4 auto-rows-[minmax(180px,auto)] gap-4 grid-flow-dense",
 
     // --- "STRANGE" LOGIC APPLIED TO SLOT CHILDREN ---
     // These selectors target any direct child (&>*) passed into the slot.
 
     // The 1st item is always a large feature block (2x2)
-    "md:[&>*:nth-child(1)]:col-span-2 md:[&>*:nth-child(1)]:row-span-2",
+    "2xl:[&>*:nth-child(1)]:col-span-2 2xl:[&>*:nth-child(1)]:row-span-2",
 
     // Every 3rd item is wide (2x1)
-    "md:[&>*:nth-child(3n)]:col-span-2",
+    "2xl:[&>*:nth-child(3n)]:col-span-2",
 
     // Every 8th item is tall (1x2)
-    "md:[&>*:nth-child(8n)]:row-span-2",
+    "2xl:[&>*:nth-child(8n)]:row-span-2",
 
     // Every 11th item is another large block (2x2) to break the rhythm
-    "md:[&>*:nth-child(11n)]:col-span-2 md:[&>*:nth-child(11n)]:row-span-2",
+    "2xl:[&>*:nth-child(11n)]:col-span-2 2xl:[&>*:nth-child(11n)]:row-span-2",
 
     // Force children to fill the grid cells assigned to them
     "*:h-full *:w-full",
@@ -41,10 +41,13 @@ const { items, class: className, ...props } = Astro.props;
 >
   {
     items?.map((item, index) => (
-      <div
-        class="z-20"
-      >
-        <ContentCard content={item} cardSize={index === 0 ? "2x2" : index % 11 === 0 ? "2x2" : index % 8 === 0 ? "1x2" : index % 3 === 0 ? "2x1" : "2x1"}  />
+      <div class="z-20">
+        <ContentCard
+          content={item}
+          cardSize={
+            index === 0 ? "2x2" : index % 11 === 0 ? "2x2" : index % 8 === 0 ? "1x2" : index % 3 === 0 ? "2x1" : "2x1"
+          }
+        />
       </div>
     ))
   }

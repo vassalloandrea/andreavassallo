@@ -37,7 +37,12 @@ const cardId = `waypoint-card-${waypoint.id}`;
     </CardTitle>
   </CardHeader>
   <CardContent class="space-y-3">
-    <p class={cn("card-paragraph text-sm text-muted-foreground leading-relaxed", cardSize === "2x2" ? "line-clamp-12" : "line-clamp-3")}>
+    <p
+      class={cn(
+        "card-paragraph text-sm text-muted-foreground leading-relaxed line-clamp-4",
+        cardSize === "2x2" ? "2xl:line-clamp-12" : "2xl:line-clamp-3"
+      )}
+    >
       <Fragment set:html={getHtmlText(renderedWaypoint)} />
     </p>
     <WaypointMeta content={waypoint} meta="topics" />
