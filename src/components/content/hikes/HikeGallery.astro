@@ -11,7 +11,9 @@ interface Props extends HTMLAttributes<"div"> {
   class?: string;
 }
 
-const allImages = import.meta.glob<{ default: ImageMetadata }>("/src/content/assets/hike_images/**/*.{jpg,jpeg,png,gif,svg,webp}");
+const allImages = import.meta.glob<{ default: ImageMetadata }>(
+  "/src/content/assets/hike_images/**/*.{jpg,jpeg,png,gif,svg,webp}"
+);
 
 async function fetchHikeImages(hike: CollectionEntry<"hikes">): Promise<ImageMetadata[]> {
   const prefix = `/src/content/assets/hike_images/${hike.id}/`;
@@ -139,7 +141,7 @@ const imageSrcs = images.map((img) => img.src);
         class="fixed inset-0 z-50 bg-background/95 backdrop-blur-md hidden items-center justify-center opacity-0 transition-opacity duration-300"
       >
         <button
-          class="absolute top-4 right-4 sm:top-6 sm:right-6 w-10 h-10 sm:w-12 sm:h-12 bg-secondary rounded-full flex items-center justify-center text-foreground hover:bg-secondary/80 touch-manipulation"
+          class="absolute top-4 right-4 sm:top-6 cursor-pointer sm:right-6 w-10 h-10 sm:w-12 sm:h-12 bg-secondary rounded-full flex items-center justify-center text-foreground hover:bg-secondary/80 touch-manipulation"
           aria-label="Close fullscreen"
           data-action="click->gallery#closeFullscreen"
         >
