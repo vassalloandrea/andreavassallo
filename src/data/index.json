@@ -115,6 +115,36 @@
   },
   {
     "ids": [
+      "Customer Journey",
+      "customer-journey"
+    ],
+    "slug": "customer-journey",
+    "type": "waypoints",
+    "outboundLinks": [
+      {
+        "slug": "schwartz-awareness-levels",
+        "type": "waypoints"
+      }
+    ],
+    "inboundLinks": []
+  },
+  {
+    "ids": [
+      "Define the destination before choosing the instrument",
+      "define-the-destination-before-choosing-the-instrument"
+    ],
+    "slug": "define-the-destination-before-choosing-the-instrument",
+    "type": "waypoints",
+    "outboundLinks": [
+      {
+        "slug": "goodharts-law",
+        "type": "waypoints"
+      }
+    ],
+    "inboundLinks": []
+  },
+  {
+    "ids": [
       "Economies of scale",
       "economies-of-scale"
     ],
@@ -124,6 +154,46 @@
     "inboundLinks": [
       {
         "slug": "blanket-discounts-destroy-margins",
+        "type": "waypoints"
+      }
+    ]
+  },
+  {
+    "ids": [
+      "Epistemic humility is not a virtue, it is a structural necessity",
+      "epistemic-humility-is-not-a-virtue-it-is-a-structural-necessity"
+    ],
+    "slug": "epistemic-humility-is-not-a-virtue-it-is-a-structural-necessity",
+    "type": "waypoints",
+    "outboundLinks": [
+      {
+        "slug": "radical-empiricism",
+        "type": "waypoints"
+      },
+      {
+        "slug": "kant-empiricism-concept",
+        "type": "waypoints"
+      }
+    ],
+    "inboundLinks": [
+      {
+        "slug": "you-are-not-what-you-perceive-you-are-how-you-select",
+        "type": "waypoints"
+      }
+    ]
+  },
+  {
+    "ids": [
+      "Define the destination before choosing the instrument",
+      "Goodhart's Law",
+      "goodharts-law"
+    ],
+    "slug": "goodharts-law",
+    "type": "waypoints",
+    "outboundLinks": [],
+    "inboundLinks": [
+      {
+        "slug": "define-the-destination-before-choosing-the-instrument",
         "type": "waypoints"
       }
     ]
@@ -142,6 +212,10 @@
       }
     ],
     "inboundLinks": [
+      {
+        "slug": "epistemic-humility-is-not-a-virtue-it-is-a-structural-necessity",
+        "type": "waypoints"
+      },
       {
         "slug": "radical-empiricism",
         "type": "waypoints"
@@ -166,6 +240,10 @@
       }
     ],
     "inboundLinks": [
+      {
+        "slug": "epistemic-humility-is-not-a-virtue-it-is-a-structural-necessity",
+        "type": "waypoints"
+      },
       {
         "slug": "kant-empiricism-concept",
         "type": "waypoints"
@@ -203,7 +281,12 @@
     "slug": "schwartz-awareness-levels",
     "type": "waypoints",
     "outboundLinks": [],
-    "inboundLinks": []
+    "inboundLinks": [
+      {
+        "slug": "customer-journey",
+        "type": "waypoints"
+      }
+    ]
   },
   {
     "ids": [
@@ -230,6 +313,31 @@
         "type": "books"
       }
     ]
+  },
+  {
+    "ids": [
+      "You are not what you perceive, you are how you select",
+      "you-are-not-what-you-perceive-you-are-how-you-select"
+    ],
+    "slug": "you-are-not-what-you-perceive-you-are-how-you-select",
+    "type": "waypoints",
+    "outboundLinks": [
+      {
+        "slug": "epistemic-humility-is-not-a-virtue-it-is-a-structural-necessity",
+        "type": "waypoints"
+      }
+    ],
+    "inboundLinks": []
+  },
+  {
+    "ids": [
+      "Decision Making",
+      "decision-making"
+    ],
+    "slug": "decision-making",
+    "type": "topics",
+    "outboundLinks": [],
+    "inboundLinks": []
   },
   {
     "ids": [
@@ -477,6 +585,16 @@
       "e-commerce-core"
     ],
     "slug": "e-commerce-core",
+    "type": "books",
+    "outboundLinks": [],
+    "inboundLinks": []
+  },
+  {
+    "ids": [
+      "How to Win Friends and Influence People",
+      "how-to-win-friends-and-influence-people"
+    ],
+    "slug": "how-to-win-friends-and-influence-people",
     "type": "books",
     "outboundLinks": [],
     "inboundLinks": []

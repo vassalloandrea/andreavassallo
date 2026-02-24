@@ -25,7 +25,7 @@ const baseTransformers = [
   normalizeFilename(),
   escapeMdx(),
   addContentTypeToMetadata(),
-  sanitizeContent()
+  sanitizeContent(),
 ];
 
 const atlasTransformers = [removeFirstH1(), removeSection({ headingLevel: 2, title: "Metadata" }), ...baseTransformers];
@@ -47,18 +47,28 @@ const config: Configuration = {
       charted: 2,
     };
 
-    if (a.data.updatedAt! > b.data.updatedAt!) {
-      return -1;
+    const aUpdated = new Date(a.data.updatedAt!).getTime();
+    const bUpdated = new Date(b.data.updatedAt!).getTime();
+    const aCreated = new Date(a.data.createdAt!).getTime();
+    const bCreated = new Date(b.data.createdAt!).getTime();
+
+    const SIXTY_MINUTES = 60 * 60 * 1000;
+    const isSameWindow = Math.abs(aUpdated - bUpdated) <= SIXTY_MINUTES;
+
+    if (isSameWindow) {
+      if (aCreated > bCreated) return -1;
+      if (aCreated < bCreated) return 1;
+
+      const statusPriorityA = statusPriorities[a.data.status];
+      const statusPriorityB = statusPriorities[b.data.status];
+
+      return statusPriorityA > statusPriorityB ? -1 : 1;
     }
 
-    if (a.data.updatedAt! < b.data.updatedAt!) {
-      return 1;
-    }
+    if (aUpdated > bUpdated) return -1;
+    if (aUpdated < bUpdated) return 1;
 
-    const statusPriorityA = statusPriorities[a.data.status];
-    const statusPriorityB = statusPriorities[b.data.status];
-
-    return statusPriorityA > statusPriorityB ? -1 : 1;
+    return 0;
   },
 
   // Where do we fetch the content from and what transformations do we want to apply?

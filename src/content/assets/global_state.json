@@ -12,18 +12,18 @@
     "time": "39h 45m"
   },
   "books": {
-    "total": 5,
+    "total": 6,
     "completed": 2,
-    "reading": 3,
-    "highlights": 208
+    "reading": 4,
+    "highlights": 233
   },
   "writings": {
     "total": 7
   },
   "waypoints": {
-    "total": 9,
-    "sketch": 8,
-    "surveying": 0,
-    "charted": 1
+    "total": 14,
+    "sketch": 11,
+    "surveying": 1,
+    "charted": 2
   }
 }
