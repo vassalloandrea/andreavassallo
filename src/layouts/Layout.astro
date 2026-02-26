@@ -2,6 +2,7 @@
 import "@styles/global.css";
 
 import { Font } from "astro:assets";
+import { ClientRouter } from "astro:transitions";
 
 import Navbar from "@components/ui/navbar/Navbar.astro";
 import Footer from "@components/ui/Footer.astro";
@@ -19,7 +20,7 @@ import { cn } from "src/lib/utils";
 const { elevation, latestHike, peakSleeps } = Astro.locals.globalState;
 const { class: className, title, description = "Andrea Vassallo's digital garden called Atlas." } = Astro.props;
 
-Astro.response.headers.set("Cache-Control", "public, max-age=0, s-maxage=3600, stale-while-revalidate=31536000");
+Astro.response.headers.set("Cache-Control", "public, max-age=0, s-maxage=1800, stale-while-revalidate=31536000");
 
 const canonicalURL = new URL(Astro.url.pathname, "https://andreavassallo.it");
 ---
@@ -39,7 +40,7 @@ const canonicalURL = new URL(Astro.url.pathname, "https://andreavassallo.it");
     {title && <title>{title}</title>}
 
     <Font cssVariable="--font-sans" preload />
-    <Font cssVariable="--font-serif"  />
+    <Font cssVariable="--font-serif" />
     <Font cssVariable="--font-mono" />
 
     <Analytics measurementId="G-K7F59Y4540" />
@@ -63,6 +64,8 @@ const canonicalURL = new URL(Astro.url.pathname, "https://andreavassallo.it");
     </script>
 
     <slot name="head" />
+
+    <ClientRouter />
   </head>
 
   <body class="bg-background text-muted-foreground transition-colors duration-300 antialiased">
@@ -98,4 +101,3 @@ const canonicalURL = new URL(Astro.url.pathname, "https://andreavassallo.it");
     setTimeout(() => import("../controllers/index.ts"), 300);
   }
 </script>
-

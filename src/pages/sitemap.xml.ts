@@ -5,11 +5,10 @@ import type { APIRoute } from "astro";
 export const GET: APIRoute = async () => {
   const site = "https://andreavassallo.it";
 
-  const [waypoints, books, hikes, writings] = await Promise.all([
+  const [waypoints, books, hikes] = await Promise.all([
     getCollection("waypoints"),
     getCollection("books"),
     getCollection("hikes"),
-    getCollection("writings"),
   ]);
 
   const urls = [
@@ -27,7 +26,6 @@ export const GET: APIRoute = async () => {
     ...waypoints.map((w) => `${site}/waypoints/${w.id}/`),
     ...books.map((b) => `${site}/books/${b.id}/`),
     ...hikes.map((h) => `${site}/hikes/${h.id}/`),
-    ...writings.map((w) => `${site}/writings/${w.id}/`),
   ];
 
   const sitemap = `<?xml version="1.0" encoding="UTF-8"?>
