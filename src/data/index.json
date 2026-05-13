@@ -591,6 +591,16 @@
   },
   {
     "ids": [
+      "How Brands Grow",
+      "how-brands-grow"
+    ],
+    "slug": "how-brands-grow",
+    "type": "books",
+    "outboundLinks": [],
+    "inboundLinks": []
+  },
+  {
+    "ids": [
       "How to Win Friends and Influence People",
       "how-to-win-friends-and-influence-people"
     ],

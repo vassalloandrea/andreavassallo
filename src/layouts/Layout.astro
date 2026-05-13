@@ -28,6 +28,8 @@ const canonicalURL = new URL(Astro.url.pathname, "https://andreavassallo.it");
 <!doctype html>
 <html lang="en" class="text-[18px]">
   <head>
+    <script type="text/javascript" src="https://embeds.iubenda.com/widgets/8f746116-a282-48de-a6a6-a9e1134ddc9c.js"></script>
+
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width" />
     <meta name="description" content={description} />
@@ -83,7 +85,7 @@ const canonicalURL = new URL(Astro.url.pathname, "https://andreavassallo.it");
     <CommandPalette />
     <BackToTop />
     <ElevationWidget elevation={elevation} latestHike={latestHike} peakSleeps={peakSleeps} />
-    <CookieConsent />
+    <!-- <CookieConsent /> -->
 
     <script>
       import { initScrollAnimations } from "src/lib/animations";
