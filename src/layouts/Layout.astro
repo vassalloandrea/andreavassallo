@@ -12,7 +12,6 @@ import Background from "@components/ui/Background.astro";
 import AntiFooter from "@components/ui/AntiFooter.astro";
 import ElevationWidget from "@components/ui/ElevationWidget.astro";
 import Analytics from "@components/Analytics.astro";
-import CookieConsent from "@components/ui/CookieConsent.astro";
 
 import localMountains from "../data/mountains.png";
 import { cn } from "src/lib/utils";
@@ -28,7 +27,8 @@ const canonicalURL = new URL(Astro.url.pathname, "https://andreavassallo.it");
 <!doctype html>
 <html lang="en" class="text-[18px]">
   <head>
-    <script type="text/javascript" src="https://embeds.iubenda.com/widgets/8f746116-a282-48de-a6a6-a9e1134ddc9c.js"></script>
+    <script type="text/javascript" src="https://embeds.iubenda.com/widgets/8f746116-a282-48de-a6a6-a9e1134ddc9c.js"
+    ></script>
 
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width" />
@@ -85,13 +85,14 @@ const canonicalURL = new URL(Astro.url.pathname, "https://andreavassallo.it");
     <CommandPalette />
     <BackToTop />
     <ElevationWidget elevation={elevation} latestHike={latestHike} peakSleeps={peakSleeps} />
-    <!-- <CookieConsent /> -->
 
     <script>
       import { initScrollAnimations } from "src/lib/animations";
+      import { initCookieConsent } from "src/lib/cookie-consent";
 
       document.addEventListener("astro:page-load", initScrollAnimations);
       initScrollAnimations();
+      initCookieConsent();
     </script>
   </body>
 </html>
