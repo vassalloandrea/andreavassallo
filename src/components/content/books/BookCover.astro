@@ -5,13 +5,14 @@ import { cn } from "src/lib/utils";
 
 import type { ImageMetadata } from "astro";
 
-async function fetchBookCover(book: CollectionEntry<"books">): Promise<{ default: ImageMetadata }> {
+async function fetchBookCover(book: CollectionEntry<"books">): Promise<{ default: ImageMetadata } | null> {
   const images = import.meta.glob<{ default: ImageMetadata }>("/src/content/assets/covers/*.jpg");
 
   const cover = images[`/src/content/assets/covers/${book.id.toLowerCase()}.jpg`];
 
   if (!cover) {
-    throw new Error(`Cannot find cover for ${book.id}`);
+    console.warn(`Cannot find cover for ${book.id}, falling back to placeholder`);
+    return null;
   }
 
   return await cover();
@@ -28,14 +29,22 @@ const cover = await fetchBookCover(book);
 
 <div class={cn("relative overflow-hidden group", className)}>
   <div class="absolute inset-0 z-10"></div>
-  <Image
-    src={cover.default}
-    alt={`${book.data.title} cover`}
-    loading="lazy"
-    decoding="async"
-    quality={50}
-    format="webp"
-    width={600}
-    class="w-full h-full object-cover object-top md:grayscale-50 md:group-hover:grayscale-0 transition-all duration-300 ease-in-out"
-  />
+  {
+    cover ? (
+      <Image
+        src={cover.default}
+        alt={`${book.data.title} cover`}
+        loading="lazy"
+        decoding="async"
+        quality={50}
+        format="webp"
+        width={600}
+        class="w-full h-full object-cover object-top md:grayscale-50 md:group-hover:grayscale-0 transition-all duration-300 ease-in-out"
+      />
+    ) : (
+      <div class="w-full h-full flex items-center justify-center bg-muted p-4 text-center">
+        <span class="text-sm text-muted-foreground">{book.data.title}</span>
+      </div>
+    )
+  }
 </div>
